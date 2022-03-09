@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//  Voxel types:
+//  ENUM:
 public enum VoxelType
 {
     Nothing,

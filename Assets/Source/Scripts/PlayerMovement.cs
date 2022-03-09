@@ -1,40 +1,46 @@
+//  PlayerMovement.cs - Script for enabling player to move, as well as performing gravity checks.
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//  CLASS:
 public class PlayerMovement : MonoBehaviour
 {
-    public CharacterController controller;
-    public GameObject groundScanner;
-    public World currentWorld;
-    public LayerMask groundLayer;
+    //  VARIABLES:
+    public CharacterController  Controller;
+    public GameObject           GroundScanner;
+    public World                CurrentWorld;
+    public LayerMask            GroundLayer;
 
-    public float footRadius = 0.4f;
-    public float moveSpeed = 5.0f;
-    public float JumpPower = 2.0f;
-    public Vector3 Velocity;
-    public bool isGrounded = false;
+    public Vector3  Velocity;
+    public float    FootRadius  = 0.4f;
+    public float    MoveSpeed   = 5.0f;
+    public float    JumpPower   = 2.0f;
+    public bool     IsGrounded  = false;
 
+    //  FUNCTIONS:
+    //  Function to update the script during runtime.
     void Update()
     {
-        isGrounded = Physics.CheckSphere(groundScanner.transform.position, footRadius, groundLayer);
+        IsGrounded = Physics.CheckSphere(GroundScanner.transform.position, FootRadius, GroundLayer);
 
-        if (isGrounded && Velocity.y < 0.0f)
+        if (IsGrounded && Velocity.y < 0.0f)
         {
             Velocity.y = -2.0f;
         }
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && IsGrounded)
         {
-            Velocity.y = Mathf.Sqrt(JumpPower * -2.0f * currentWorld.gravity);
+            Velocity.y = Mathf.Sqrt(JumpPower * -2.0f * CurrentWorld.gravity);
         }
 
         float xDirection = Input.GetAxis("Horizontal");
         float zDirection = Input.GetAxis("Vertical");
 
         Vector3 moveDirection = transform.right * xDirection + transform.forward * zDirection;
-        controller.Move(moveDirection * moveSpeed * Time.deltaTime);
-        Velocity.y += currentWorld.gravity * Time.deltaTime;
-        controller.Move(Velocity * Time.deltaTime);
+        Controller.Move(moveDirection * MoveSpeed * Time.deltaTime);
+        Velocity.y += CurrentWorld.gravity * Time.deltaTime;
+        Controller.Move(Velocity * Time.deltaTime);
     }
 }
