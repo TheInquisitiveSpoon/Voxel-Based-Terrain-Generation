@@ -9,57 +9,57 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3382c69066330c4e8c5ed98d03864a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 5906ffc4df4c50741848ffb715c2515c, type: 3}
   m_Name: Block Data
   m_EditorClassIdentifier: 
-  textureSizeX: 0.1
-  textureSizeY: 0.1
-  textureDataList:
-  - blockType: 1
-    up: {x: 0, y: 0}
-    down: {x: 0, y: 0}
-    side: {x: 0, y: 0}
-    isSolid: 0
-    generatesCollider: 0
-  - blockType: 2
-    up: {x: 0, y: 3}
-    down: {x: 0, y: 3}
-    side: {x: 0, y: 3}
-    isSolid: 0
-    generatesCollider: 1
-  - blockType: 3
-    up: {x: 7, y: 4}
-    down: {x: 7, y: 4}
-    side: {x: 7, y: 4}
-    isSolid: 1
-    generatesCollider: 1
-  - blockType: 4
-    up: {x: 6, y: 8}
-    down: {x: 7, y: 4}
-    side: {x: 7, y: 5}
-    isSolid: 1
-    generatesCollider: 1
-  - blockType: 5
-    up: {x: 3, y: 5}
-    down: {x: 3, y: 5}
-    side: {x: 3, y: 5}
-    isSolid: 1
-    generatesCollider: 1
-  - blockType: 6
-    up: {x: 3, y: 3}
-    down: {x: 3, y: 3}
-    side: {x: 3, y: 3}
-    isSolid: 0
-    generatesCollider: 1
-  - blockType: 7
-    up: {x: 0, y: 0}
-    down: {x: 0, y: 0}
-    side: {x: 1, y: 9}
-    isSolid: 1
-    generatesCollider: 1
-  - blockType: 8
-    up: {x: 4, y: 1}
-    down: {x: 4, y: 1}
-    side: {x: 4, y: 1}
-    isSolid: 1
-    generatesCollider: 1
+  TextureSizeX: 0.1
+  TextureSizeY: 0.1
+  DataList:
+  - VoxelType: 1
+    TopTexture: {x: 0, y: 0}
+    BottomTexture: {x: 0, y: 0}
+    SideTexture: {x: 0, y: 0}
+    IsSolid: 0
+    GeneratesCollider: 0
+  - VoxelType: 2
+    TopTexture: {x: 0, y: 3}
+    BottomTexture: {x: 0, y: 3}
+    SideTexture: {x: 0, y: 3}
+    IsSolid: 0
+    GeneratesCollider: 0
+  - VoxelType: 3
+    TopTexture: {x: 7, y: 4}
+    BottomTexture: {x: 7, y: 4}
+    SideTexture: {x: 7, y: 4}
+    IsSolid: 1
+    GeneratesCollider: 1
+  - VoxelType: 4
+    TopTexture: {x: 6, y: 8}
+    BottomTexture: {x: 7, y: 4}
+    SideTexture: {x: 7, y: 5}
+    IsSolid: 1
+    GeneratesCollider: 1
+  - VoxelType: 5
+    TopTexture: {x: 3, y: 5}
+    BottomTexture: {x: 3, y: 5}
+    SideTexture: {x: 3, y: 5}
+    IsSolid: 1
+    GeneratesCollider: 1
+  - VoxelType: 6
+    TopTexture: {x: 3, y: 3}
+    BottomTexture: {x: 3, y: 3}
+    SideTexture: {x: 3, y: 3}
+    IsSolid: 0
+    GeneratesCollider: 1
+  - VoxelType: 7
+    TopTexture: {x: 0, y: 0}
+    BottomTexture: {x: 0, y: 0}
+    SideTexture: {x: 1, y: 9}
+    IsSolid: 1
+    GeneratesCollider: 1
+  - VoxelType: 8
+    TopTexture: {x: 4, y: 1}
+    BottomTexture: {x: 4, y: 1}
+    SideTexture: {x: 4, y: 1}
+    IsSolid: 1
+    GeneratesCollider: 1

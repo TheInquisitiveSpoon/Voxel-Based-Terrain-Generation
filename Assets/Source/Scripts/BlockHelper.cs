@@ -25,13 +25,13 @@ public static class BlockHelper
             var neighbourBlockCoordinates = new Vector3Int(x, y, z) + direction.GetVector();
             var neighbourBlockType = Chunk.GetBlockFromChunkCoordinates(chunk, neighbourBlockCoordinates);
 
-            if (neighbourBlockType != VoxelType.Nothing && BlockDataManager.blockTextureDataDictionary[neighbourBlockType].isSolid == false)
+            if (neighbourBlockType != VoxelType.Nothing && BlockDataManager.blockTextureDataDictionary[neighbourBlockType].IsSolid == false)
             {
 
                 if (blockType == VoxelType.Water)
                 {
                     if (neighbourBlockType == VoxelType.Air)
-                        meshData.waterMesh = GetFaceDataIn(direction, chunk, x, y, z, meshData.waterMesh, blockType);
+                        meshData.WaterMesh = GetFaceDataIn(direction, chunk, x, y, z, meshData.WaterMesh, blockType);
                 }
                 else
                 {
@@ -47,8 +47,8 @@ public static class BlockHelper
     public static MeshData GetFaceDataIn(Direction direction, ChunkData chunk, int x, int y, int z, MeshData meshData, VoxelType blockType)
     {
         GetFaceVertices(direction, x, y, z, meshData, blockType);
-        meshData.AddQuadTriangles(BlockDataManager.blockTextureDataDictionary[blockType].generatesCollider);
-        meshData.uv.AddRange(FaceUVs(direction, blockType));
+        meshData.AddQuadTriangles(BlockDataManager.blockTextureDataDictionary[blockType].GeneratesCollider);
+        meshData.UVs.AddRange(FaceUVs(direction, blockType));
 
 
         return meshData;
@@ -56,7 +56,7 @@ public static class BlockHelper
 
     public static void GetFaceVertices(Direction direction, int x, int y, int z, MeshData meshData, VoxelType blockType)
     {
-        var generatesCollider = BlockDataManager.blockTextureDataDictionary[blockType].generatesCollider;
+        var generatesCollider = BlockDataManager.blockTextureDataDictionary[blockType].GeneratesCollider;
         //order of vertices matters for the normals and how we render the mesh
         switch (direction)
         {
@@ -126,9 +126,9 @@ public static class BlockHelper
     {
         return direction switch
         {
-            Direction.up => BlockDataManager.blockTextureDataDictionary[blockType].up,
-            Direction.down => BlockDataManager.blockTextureDataDictionary[blockType].down,
-            _ => BlockDataManager.blockTextureDataDictionary[blockType].side
+            Direction.up => BlockDataManager.blockTextureDataDictionary[blockType].TopTexture,
+            Direction.down => BlockDataManager.blockTextureDataDictionary[blockType].BottomTexture,
+            _ => BlockDataManager.blockTextureDataDictionary[blockType].SideTexture
         };
     }
 }

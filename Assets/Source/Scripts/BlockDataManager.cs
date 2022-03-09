@@ -7,18 +7,18 @@ public class BlockDataManager : MonoBehaviour
     public static float textureOffset = 0.001f;
     public static float tileSizeX, tileSizeY;
     public static Dictionary<VoxelType, TextureData> blockTextureDataDictionary = new Dictionary<VoxelType, TextureData>();
-    public BlockDataSO textureData;
+    public BlockData textureData;
 
     private void Awake()
     {
-        foreach (var item in textureData.textureDataList)
+        foreach (var item in textureData.DataList)
         {
-            if (blockTextureDataDictionary.ContainsKey(item.blockType) == false)
+            if (blockTextureDataDictionary.ContainsKey(item.VoxelType) == false)
             {
-                blockTextureDataDictionary.Add(item.blockType, item);
+                blockTextureDataDictionary.Add(item.VoxelType, item);
             };
         }
-        tileSizeX = textureData.textureSizeX;
-        tileSizeY = textureData.textureSizeY;
+        tileSizeX = textureData.TextureSizeX;
+        tileSizeY = textureData.TextureSizeY;
     }
 }
