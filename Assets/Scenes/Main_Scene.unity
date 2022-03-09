@@ -714,17 +714,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 204ebfb27e84c204685237c31ba10707, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 893187026}
-  groundScanner: {fileID: 660946617}
-  currentWorld: {fileID: 1516733790}
-  groundLayer:
+  Controller: {fileID: 893187026}
+  GroundScanner: {fileID: 660946617}
+  CurrentWorld: {fileID: 1516733790}
+  GroundLayer:
     serializedVersion: 2
     m_Bits: 8
-  footRadius: 0.4
-  moveSpeed: 5
-  JumpPower: 2
   Velocity: {x: 0, y: 0, z: 0}
-  isGrounded: 0
+  FootRadius: 0.4
+  MoveSpeed: 5
+  JumpPower: 2
+  IsGrounded: 0
 --- !u!1 &1078065566
 GameObject:
   m_ObjectHideFlags: 0
@@ -959,8 +959,8 @@ MonoBehaviour:
   chunkHeight: 100
   waterThreshold: 50
   noiseScale: 0.03
-  gravity: -20
   chunkPrefab: {fileID: 6960135742322737557, guid: 3cb9458c73adf8c4fbd226f183e2e08c, type: 3}
+  gravity: -20
 --- !u!4 &1516733791
 Transform:
   m_ObjectHideFlags: 0
