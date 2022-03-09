@@ -854,11 +854,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 146984129440e77459e67fec31f92b11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 893187025}
-  currentXRotation: 0
-  currentYRotation: 0
-  sensitivityX: 300
-  sensitivityY: 300
+  Player: {fileID: 893187025}
+  CurrentXRotation: 0
+  CurrentYRotation: 0
+  SensitivityX: 200
+  SensitivityY: 200
 --- !u!1 &1080689899
 GameObject:
   m_ObjectHideFlags: 0

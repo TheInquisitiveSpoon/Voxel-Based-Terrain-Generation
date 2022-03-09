@@ -1,75 +1,91 @@
+//  CameraMovement.cs - Handles movement and other functions of the camera during gameplay.
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//  CLASS:
 public class CameraMovement : MonoBehaviour
 {
-    public GameObject player;
+    //  VARIABLES:
+    public GameObject   Player;
 
-    public float currentXRotation = 0.0f;
-    public float currentYRotation = 0.0f;
+    public float        CurrentXRotation    = 0.0f;
+    public float        CurrentYRotation    = 0.0f;
+    public float        SensitivityX        = 200.0f;
+    public float        SensitivityY        = 200.0f;
 
-    public float sensitivityX = 200.0f;
-    public float sensitivityY = 200.0f;
-    bool isFirstPerson = true;
-    bool isInvertedY = false;
-    bool isCursorHidden = false;
+    bool                IsFirstPerson       = true;
+    bool                IsInvertedY         = false;
+    bool                IsCursorHidden      = false;
 
-    public void SwapCameraMode()
-    {
-        if (isFirstPerson)
-        {
-            transform.localPosition = new Vector3(0.0f, 1.0f, -2.5f);
-            transform.localRotation = Quaternion.AngleAxis(25.0f, Vector3.right);
-            isFirstPerson = false;
-        }
-        else
-        {
-            transform.localPosition = new Vector3(0.0f, 0.4f, 0.1f);
-            transform.rotation = player.transform.rotation;
-            isFirstPerson = true;
-        }
-    }
-
-    public void ShowHideCursor()
-    {
-        if (isCursorHidden)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            isCursorHidden = false;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.None;
-            isCursorHidden = true;
-        }
-    }
-
-    // Update is called once per frame
+    //  FUNCTIONS:
+    // Function to update the script during runtime.
     void Update()
     {
+        //  Swaps camera mode when F5 pressed.
         if (Input.GetKeyDown(KeyCode.F5))
         {
             SwapCameraMode();
         }
 
+        //  Changes cursor visibility when Escape pressed.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             ShowHideCursor();
         }
 
-        float mouseX = Input.GetAxis("Mouse X") * sensitivityX * Time.deltaTime;
+        //  Gets Movement input for X axis.
+        float mouseX = Input.GetAxis("Mouse X") * SensitivityX * Time.deltaTime;
 
-        if (isFirstPerson)
+        //  Handles camera Y movement in first person, using clamping to keep in range of view.
+        if (IsFirstPerson)
         {
-            float mouseY = Input.GetAxis("Mouse Y") * sensitivityY * Time.deltaTime;
-            if (!isInvertedY) { currentYRotation -= mouseY; }
-            else { currentYRotation += mouseY; }
-            currentYRotation = Mathf.Clamp(currentYRotation, -80.0f, 80.0f);
-            transform.localRotation = Quaternion.Euler(currentYRotation, 0.0f, 0.0f);
+            float mouseY = Input.GetAxis("Mouse Y") * SensitivityY * Time.deltaTime;
+
+            if (!IsInvertedY) { CurrentYRotation -= mouseY; }
+            else { CurrentYRotation += mouseY; }
+
+            CurrentYRotation = Mathf.Clamp(CurrentYRotation, -80.0f, 80.0f);
+            transform.localRotation = Quaternion.Euler(CurrentYRotation, 0.0f, 0.0f);
         }
 
-        currentXRotation += mouseX;
-        player.transform.Rotate(Vector3.up * mouseX);
+        //  Rotates using mouse X Input.
+        CurrentXRotation += mouseX;
+        Player.transform.Rotate(Vector3.up * mouseX);
+    }
+
+    //  Function to enable swapping between first and third person.
+    public void SwapCameraMode()
+    {
+        if (IsFirstPerson)
+        {
+            //  Places camera in position for first person.
+            transform.localPosition = new Vector3(0.0f, 1.0f, -2.5f);
+            transform.localRotation = Quaternion.AngleAxis(25.0f, Vector3.right);
+            IsFirstPerson = false;
+        }
+        else
+        {
+            //  Places camera in position for third person.
+            transform.localPosition = new Vector3(0.0f, 0.4f, 0.1f);
+            transform.rotation = Player.transform.rotation;
+            IsFirstPerson = true;
+        }
+    }
+
+    //  Function to hide or show mouse cursor.
+    public void ShowHideCursor()
+    {
+        if (IsCursorHidden)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            IsCursorHidden = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+            IsCursorHidden = true;
+        }
     }
 }
