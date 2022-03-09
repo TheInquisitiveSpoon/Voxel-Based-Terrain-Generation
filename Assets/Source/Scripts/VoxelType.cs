@@ -1,18 +1,19 @@
+//  VoxelType.cs - Enumeration for voxel types available in the game.
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum BlockType
+//  Voxel types:
+public enum VoxelType
 {
     Nothing,
     Air,
-    Grass_Dirt,
-    Dirt,
-    Grass_Stone,
-    Stone,
-    TreeTrunk,
-    TreeLeafesTransparent,
-    TreeLeafsSolid,
     Water,
-    Sand
+    Dirt,
+    Grass,
+    Stone,
+    Sand,
+    Tree,
+    Leaves
 }

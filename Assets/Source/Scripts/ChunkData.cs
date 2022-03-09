@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChunkData
 {
-    public BlockType[] blocks;
+    public VoxelType[] blocks;
     public int chunkSize = 16;
     public int chunkHeight = 100;
     public World worldReference;
@@ -18,7 +18,7 @@ public class ChunkData
         this.chunkSize = chunkSize;
         this.worldReference = world;
         this.worldPosition = worldPosition;
-        blocks = new BlockType[chunkSize * chunkHeight * chunkSize];
+        blocks = new VoxelType[chunkSize * chunkHeight * chunkSize];
     }
 
 }

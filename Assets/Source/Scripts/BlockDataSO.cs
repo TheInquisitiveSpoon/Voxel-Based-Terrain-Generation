@@ -14,7 +14,7 @@ public class BlockDataSO : ScriptableObject
 [Serializable]
 public class TextureData
 {
-    public BlockType blockType;
+    public VoxelType blockType;
     public Vector2Int up, down, side;
     public bool isSolid = true;
     public bool generatesCollider = true;

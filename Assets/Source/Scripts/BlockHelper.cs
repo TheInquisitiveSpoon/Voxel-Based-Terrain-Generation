@@ -15,9 +15,9 @@ public static class BlockHelper
     };
 
     public static MeshData GetMeshData
-        (ChunkData chunk, int x, int y, int z, MeshData meshData, BlockType blockType)
+        (ChunkData chunk, int x, int y, int z, MeshData meshData, VoxelType blockType)
     {
-        if (blockType == BlockType.Air || blockType == BlockType.Nothing)
+        if (blockType == VoxelType.Air || blockType == VoxelType.Nothing)
             return meshData;
 
         foreach (Direction direction in directions)
@@ -25,12 +25,12 @@ public static class BlockHelper
             var neighbourBlockCoordinates = new Vector3Int(x, y, z) + direction.GetVector();
             var neighbourBlockType = Chunk.GetBlockFromChunkCoordinates(chunk, neighbourBlockCoordinates);
 
-            if (neighbourBlockType != BlockType.Nothing && BlockDataManager.blockTextureDataDictionary[neighbourBlockType].isSolid == false)
+            if (neighbourBlockType != VoxelType.Nothing && BlockDataManager.blockTextureDataDictionary[neighbourBlockType].isSolid == false)
             {
 
-                if (blockType == BlockType.Water)
+                if (blockType == VoxelType.Water)
                 {
-                    if (neighbourBlockType == BlockType.Air)
+                    if (neighbourBlockType == VoxelType.Air)
                         meshData.waterMesh = GetFaceDataIn(direction, chunk, x, y, z, meshData.waterMesh, blockType);
                 }
                 else
@@ -44,7 +44,7 @@ public static class BlockHelper
         return meshData;
     }
 
-    public static MeshData GetFaceDataIn(Direction direction, ChunkData chunk, int x, int y, int z, MeshData meshData, BlockType blockType)
+    public static MeshData GetFaceDataIn(Direction direction, ChunkData chunk, int x, int y, int z, MeshData meshData, VoxelType blockType)
     {
         GetFaceVertices(direction, x, y, z, meshData, blockType);
         meshData.AddQuadTriangles(BlockDataManager.blockTextureDataDictionary[blockType].generatesCollider);
@@ -54,7 +54,7 @@ public static class BlockHelper
         return meshData;
     }
 
-    public static void GetFaceVertices(Direction direction, int x, int y, int z, MeshData meshData, BlockType blockType)
+    public static void GetFaceVertices(Direction direction, int x, int y, int z, MeshData meshData, VoxelType blockType)
     {
         var generatesCollider = BlockDataManager.blockTextureDataDictionary[blockType].generatesCollider;
         //order of vertices matters for the normals and how we render the mesh
@@ -102,7 +102,7 @@ public static class BlockHelper
         }
     }
 
-    public static Vector2[] FaceUVs(Direction direction, BlockType blockType)
+    public static Vector2[] FaceUVs(Direction direction, VoxelType blockType)
     {
         Vector2[] UVs = new Vector2[4];
         var tilePos = TexturePosition(direction, blockType);
@@ -122,7 +122,7 @@ public static class BlockHelper
         return UVs;
     }
 
-    public static Vector2Int TexturePosition(Direction direction, BlockType blockType)
+    public static Vector2Int TexturePosition(Direction direction, VoxelType blockType)
     {
         return direction switch
         {
