@@ -1,11 +1,8 @@
-//  VoxelType.cs - Enumeration for voxel types available in the game.
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//  ENUM:
-public enum VoxelType
+public enum BlockType
 {
     Nothing,
     Air,
@@ -14,6 +11,6 @@ public enum VoxelType
     Grass,
     Stone,
     Sand,
-    Tree,
+    TreeWood,
     Leaves
 }

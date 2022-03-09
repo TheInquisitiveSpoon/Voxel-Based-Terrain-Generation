@@ -39,12 +39,12 @@ public static class Chunk
         return true;
     }
 
-    public static VoxelType GetBlockFromChunkCoordinates(ChunkData chunkData, Vector3Int chunkCoordinates)
+    public static BlockType GetBlockFromChunkCoordinates(ChunkData chunkData, Vector3Int chunkCoordinates)
     {
         return GetBlockFromChunkCoordinates(chunkData, chunkCoordinates.x, chunkCoordinates.y, chunkCoordinates.z);
     }
 
-    public static VoxelType GetBlockFromChunkCoordinates(ChunkData chunkData, int x, int y, int z)
+    public static BlockType GetBlockFromChunkCoordinates(ChunkData chunkData, int x, int y, int z)
     {
         if (InRange(chunkData, x) && InRangeHeight(chunkData, y) && InRange(chunkData, z))
         {
@@ -55,7 +55,7 @@ public static class Chunk
         return chunkData.worldReference.GetBlockFromChunkCoordinates(chunkData, chunkData.worldPosition.x + x, chunkData.worldPosition.y + y, chunkData.worldPosition.z + z);
     }
 
-    public static void SetBlock(ChunkData chunkData, Vector3Int localPosition, VoxelType block)
+    public static void SetBlock(ChunkData chunkData, Vector3Int localPosition, BlockType block)
     {
         if (InRange(chunkData, localPosition.x) && InRangeHeight(chunkData, localPosition.y) && InRange(chunkData, localPosition.z))
         {

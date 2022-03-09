@@ -65,22 +65,22 @@ public class World : MonoBehaviour
                 int groundPosition = Mathf.RoundToInt(noiseValue * chunkHeight);
                 for (int y = 0; y < chunkHeight; y++)
                 {
-                    VoxelType voxelType = VoxelType.Dirt;
+                    BlockType voxelType = BlockType.Dirt;
                     if (y > groundPosition)
                     {
                         if (y < waterThreshold)
                         {
-                            voxelType = VoxelType.Water;
+                            voxelType = BlockType.Water;
                         }
                         else
                         {
-                            voxelType = VoxelType.Air;
+                            voxelType = BlockType.Air;
                         }
 
                     }
                     else if (y == groundPosition)
                     {
-                        voxelType = VoxelType.Grass;
+                        voxelType = BlockType.Grass;
                     }
 
                     Chunk.SetBlock(data, new Vector3Int(x, y, z), voxelType);
@@ -89,7 +89,7 @@ public class World : MonoBehaviour
         }
     }
 
-    internal VoxelType GetBlockFromChunkCoordinates(ChunkData chunkData, int x, int y, int z)
+    internal BlockType GetBlockFromChunkCoordinates(ChunkData chunkData, int x, int y, int z)
     {
         Vector3Int pos = Chunk.ChunkPositionFromBlockCoords(this, x, y, z);
         ChunkData containerChunk = null;
@@ -97,7 +97,7 @@ public class World : MonoBehaviour
         chunkDataDictionary.TryGetValue(pos, out containerChunk);
 
         if (containerChunk == null)
-            return VoxelType.Nothing;
+            return BlockType.Nothing;
         Vector3Int blockInCHunkCoordinates = Chunk.GetBlockInChunkCoordinates(containerChunk, new Vector3Int(x, y, z));
         return Chunk.GetBlockFromChunkCoordinates(containerChunk, blockInCHunkCoordinates);
     }

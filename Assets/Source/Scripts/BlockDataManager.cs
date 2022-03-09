@@ -6,7 +6,7 @@ public class BlockDataManager : MonoBehaviour
 {
     public static float textureOffset = 0.001f;
     public static float tileSizeX, tileSizeY;
-    public static Dictionary<VoxelType, TextureData> blockTextureDataDictionary = new Dictionary<VoxelType, TextureData>();
+    public static Dictionary<BlockType, TextureData> blockTextureDataDictionary = new Dictionary<BlockType, TextureData>();
     public BlockDataSO textureData;
 
     private void Awake()
