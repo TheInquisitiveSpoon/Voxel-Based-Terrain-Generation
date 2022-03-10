@@ -1,9 +1,5 @@
 //  VoxelType.cs - Enumeration of block types in the game.
 
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 //  ENUM:
 public enum VoxelType
 {

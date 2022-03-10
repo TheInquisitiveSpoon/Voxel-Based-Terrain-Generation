@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockDataManager : MonoBehaviour
+public class VoxelManager : MonoBehaviour
 {
     public static float textureOffset = 0.001f;
     public static float tileSizeX, tileSizeY;
     public static Dictionary<VoxelType, TextureData> blockTextureDataDictionary = new Dictionary<VoxelType, TextureData>();
-    public BlockData textureData;
+    public VoxelData textureData;
 
     private void Awake()
     {

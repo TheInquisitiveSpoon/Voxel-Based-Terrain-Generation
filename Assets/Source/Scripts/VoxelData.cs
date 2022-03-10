@@ -10,7 +10,7 @@ using UnityEngine;
 
 //  CLASSES:
 //  Class to handle Texture data of each block.
-public class BlockData : ScriptableObject
+public class VoxelData : ScriptableObject
 {
     public float            TextureSizeX;
     public float            TextureSizeY;

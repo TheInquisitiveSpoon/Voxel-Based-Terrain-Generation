@@ -1,18 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class BlockHelper
+public static class VoxelFunctions
 {
     private static Direction[] directions =
     {
-        Direction.backwards,
-        Direction.down,
-        Direction.foreward,
-        Direction.left,
-        Direction.right,
-        Direction.up
+        Direction.Backward,
+        Direction.Downwards,
+        Direction.Forward,
+        Direction.Left,
+        Direction.Right,
+        Direction.Upwards
     };
+
+    public static Vector3Int GetVector(this Direction direction)
+    {
+        return direction switch
+        {
+            Direction.Upwards => Vector3Int.up,
+            Direction.Downwards => Vector3Int.down,
+            Direction.Right => Vector3Int.right,
+            Direction.Left => Vector3Int.left,
+            Direction.Forward => Vector3Int.forward,
+            Direction.Backward => Vector3Int.back,
+            _ => throw new Exception("Invalid input direction")
+        };
+    }
 
     public static MeshData GetMeshData
         (ChunkData chunk, int x, int y, int z, MeshData meshData, VoxelType blockType)
@@ -22,10 +37,10 @@ public static class BlockHelper
 
         foreach (Direction direction in directions)
         {
-            var neighbourBlockCoordinates = new Vector3Int(x, y, z) + direction.GetVector();
+            var neighbourBlockCoordinates = new Vector3Int(x, y, z) + GetVector(direction);
             var neighbourBlockType = Chunk.GetBlockFromChunkCoordinates(chunk, neighbourBlockCoordinates);
 
-            if (neighbourBlockType != VoxelType.Nothing && BlockDataManager.blockTextureDataDictionary[neighbourBlockType].IsSolid == false)
+            if (neighbourBlockType != VoxelType.Nothing && VoxelManager.blockTextureDataDictionary[neighbourBlockType].IsSolid == false)
             {
 
                 if (blockType == VoxelType.Water)
@@ -47,7 +62,7 @@ public static class BlockHelper
     public static MeshData GetFaceDataIn(Direction direction, ChunkData chunk, int x, int y, int z, MeshData meshData, VoxelType blockType)
     {
         GetFaceVertices(direction, x, y, z, meshData, blockType);
-        meshData.AddQuadTriangles(BlockDataManager.blockTextureDataDictionary[blockType].GeneratesCollider);
+        meshData.AddQuadTriangles(VoxelManager.blockTextureDataDictionary[blockType].GeneratesCollider);
         meshData.UVs.AddRange(FaceUVs(direction, blockType));
 
 
@@ -56,42 +71,42 @@ public static class BlockHelper
 
     public static void GetFaceVertices(Direction direction, int x, int y, int z, MeshData meshData, VoxelType blockType)
     {
-        var generatesCollider = BlockDataManager.blockTextureDataDictionary[blockType].GeneratesCollider;
+        var generatesCollider = VoxelManager.blockTextureDataDictionary[blockType].GeneratesCollider;
         //order of vertices matters for the normals and how we render the mesh
         switch (direction)
         {
-            case Direction.backwards:
+            case Direction.Backward:
                 meshData.AddVertex(new Vector3(x - 0.5f, y - 0.5f, z - 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x - 0.5f, y + 0.5f, z - 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x + 0.5f, y + 0.5f, z - 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x + 0.5f, y - 0.5f, z - 0.5f), generatesCollider);
                 break;
-            case Direction.foreward:
+            case Direction.Forward:
                 meshData.AddVertex(new Vector3(x + 0.5f, y - 0.5f, z + 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x + 0.5f, y + 0.5f, z + 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x - 0.5f, y + 0.5f, z + 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x - 0.5f, y - 0.5f, z + 0.5f), generatesCollider);
                 break;
-            case Direction.left:
+            case Direction.Left:
                 meshData.AddVertex(new Vector3(x - 0.5f, y - 0.5f, z + 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x - 0.5f, y + 0.5f, z + 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x - 0.5f, y + 0.5f, z - 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x - 0.5f, y - 0.5f, z - 0.5f), generatesCollider);
                 break;
 
-            case Direction.right:
+            case Direction.Right:
                 meshData.AddVertex(new Vector3(x + 0.5f, y - 0.5f, z - 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x + 0.5f, y + 0.5f, z - 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x + 0.5f, y + 0.5f, z + 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x + 0.5f, y - 0.5f, z + 0.5f), generatesCollider);
                 break;
-            case Direction.down:
+            case Direction.Downwards:
                 meshData.AddVertex(new Vector3(x - 0.5f, y - 0.5f, z - 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x + 0.5f, y - 0.5f, z - 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x + 0.5f, y - 0.5f, z + 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x - 0.5f, y - 0.5f, z + 0.5f), generatesCollider);
                 break;
-            case Direction.up:
+            case Direction.Upwards:
                 meshData.AddVertex(new Vector3(x - 0.5f, y + 0.5f, z + 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x + 0.5f, y + 0.5f, z + 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x + 0.5f, y + 0.5f, z - 0.5f), generatesCollider);
@@ -107,17 +122,17 @@ public static class BlockHelper
         Vector2[] UVs = new Vector2[4];
         var tilePos = TexturePosition(direction, blockType);
 
-        UVs[0] = new Vector2(BlockDataManager.tileSizeX * tilePos.x + BlockDataManager.tileSizeX - BlockDataManager.textureOffset,
-            BlockDataManager.tileSizeY * tilePos.y + BlockDataManager.textureOffset);
+        UVs[0] = new Vector2(VoxelManager.tileSizeX * tilePos.x + VoxelManager.tileSizeX - VoxelManager.textureOffset,
+            VoxelManager.tileSizeY * tilePos.y + VoxelManager.textureOffset);
 
-        UVs[1] = new Vector2(BlockDataManager.tileSizeX * tilePos.x + BlockDataManager.tileSizeX - BlockDataManager.textureOffset,
-            BlockDataManager.tileSizeY * tilePos.y + BlockDataManager.tileSizeY - BlockDataManager.textureOffset);
+        UVs[1] = new Vector2(VoxelManager.tileSizeX * tilePos.x + VoxelManager.tileSizeX - VoxelManager.textureOffset,
+            VoxelManager.tileSizeY * tilePos.y + VoxelManager.tileSizeY - VoxelManager.textureOffset);
 
-        UVs[2] = new Vector2(BlockDataManager.tileSizeX * tilePos.x + BlockDataManager.textureOffset,
-            BlockDataManager.tileSizeY * tilePos.y + BlockDataManager.tileSizeY - BlockDataManager.textureOffset);
+        UVs[2] = new Vector2(VoxelManager.tileSizeX * tilePos.x + VoxelManager.textureOffset,
+            VoxelManager.tileSizeY * tilePos.y + VoxelManager.tileSizeY - VoxelManager.textureOffset);
 
-        UVs[3] = new Vector2(BlockDataManager.tileSizeX * tilePos.x + BlockDataManager.textureOffset,
-            BlockDataManager.tileSizeY * tilePos.y + BlockDataManager.textureOffset);
+        UVs[3] = new Vector2(VoxelManager.tileSizeX * tilePos.x + VoxelManager.textureOffset,
+            VoxelManager.tileSizeY * tilePos.y + VoxelManager.textureOffset);
 
         return UVs;
     }
@@ -126,9 +141,9 @@ public static class BlockHelper
     {
         return direction switch
         {
-            Direction.up => BlockDataManager.blockTextureDataDictionary[blockType].TopTexture,
-            Direction.down => BlockDataManager.blockTextureDataDictionary[blockType].BottomTexture,
-            _ => BlockDataManager.blockTextureDataDictionary[blockType].SideTexture
+            Direction.Upwards => VoxelManager.blockTextureDataDictionary[blockType].TopTexture,
+            Direction.Downwards => VoxelManager.blockTextureDataDictionary[blockType].BottomTexture,
+            _ => VoxelManager.blockTextureDataDictionary[blockType].SideTexture
         };
     }
 }
