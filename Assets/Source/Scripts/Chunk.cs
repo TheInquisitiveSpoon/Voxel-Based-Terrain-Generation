@@ -3,20 +3,15 @@ using UnityEngine;
 
 public static class Chunk
 {
-    public static void LoopThroughTheBlocks(ChunkData chunkData, Action<int, int, int> actionToPerform)
-    {
-        for (int index = 0; index < chunkData.blocks.Length; index++)
-        {
-            var position = GetPostitionFromIndex(chunkData, index);
-            actionToPerform(position.x, position.y, position.z);
-        }
-    }
-
     public static MeshData GetChunkMeshData(ChunkData chunkData)
     {
         MeshData meshData = new MeshData(true);
 
-        LoopThroughTheBlocks(chunkData, (x, y, z) => meshData = VoxelFunctions.GetMeshData(chunkData, x, y, z, meshData, chunkData.blocks[GetIndexFromPosition(chunkData, x, y, z)]));
+        for (int i = 0; i < chunkData.blocks.Length; i++)
+        {
+            Vector3Int pos = GetPostitionFromIndex(chunkData, i);
+            meshData = VoxelFunctions.GetMeshData(chunkData, pos.x, pos.y, pos.z, meshData, chunkData.blocks[GetIndexFromPosition(chunkData, pos.x, pos.y, pos.z)]);
+        }
 
         return meshData;
     }
@@ -32,7 +27,6 @@ public static class Chunk
         return pos;
     }
 
-    //in chunk coordinate system
     private static bool InRange(ChunkData chunkData, int axisCoordinate)
     {
         if (axisCoordinate < 0 || axisCoordinate >= chunkData.chunkSize)
@@ -56,10 +50,6 @@ public static class Chunk
         {
             int index = GetIndexFromPosition(chunkData, localPosition.x, localPosition.y, localPosition.z);
             chunkData.blocks[index] = block;
-        }
-        else
-        {
-            throw new Exception("Need to ask World for appropiate chunk");
         }
     }
 
