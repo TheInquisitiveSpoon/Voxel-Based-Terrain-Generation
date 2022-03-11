@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 27046177}
   - component: {fileID: 27046176}
   m_Layer: 0
-  m_Name: Block Manager
+  m_Name: Voxel Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75b1c41023616f6448eb49b52ee92a19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textureData: {fileID: 11400000, guid: 04e037efea9b0aa4e8ff26be0759cdd8, type: 2}
+  TextureData: {fileID: 11400000, guid: 04e037efea9b0aa4e8ff26be0759cdd8, type: 2}
 --- !u!4 &27046177
 Transform:
   m_ObjectHideFlags: 0
@@ -954,13 +954,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01907ffd8bb187b4abe689f6750665ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapSizeInChunks: 20
-  chunkSize: 16
-  chunkHeight: 100
-  waterThreshold: 50
-  noiseScale: 0.03
-  chunkPrefab: {fileID: 6960135742322737557, guid: 3cb9458c73adf8c4fbd226f183e2e08c, type: 3}
-  gravity: -20
+  ChunkObject: {fileID: 6960135742322737557, guid: 3cb9458c73adf8c4fbd226f183e2e08c, type: 3}
+  NumChunks: 20
+  ChunkWidth: 16
+  ChunkHeight: 100
+  WaterLevel: 50
+  Noise: 0.03
+  Gravity: -20
 --- !u!4 &1516733791
 Transform:
   m_ObjectHideFlags: 0

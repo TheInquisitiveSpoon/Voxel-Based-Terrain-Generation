@@ -1,24 +1,33 @@
+//  VoxelManager.cs - Component to hold voxel data, as well as handling texturing of each voxel.
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//  CLASS:
 public class VoxelManager : MonoBehaviour
 {
-    public static float textureOffset = 0.001f;
-    public static float tileSizeX, tileSizeY;
-    public static Dictionary<VoxelType, TextureData> blockTextureDataDictionary = new Dictionary<VoxelType, TextureData>();
-    public VoxelData textureData;
+    //  VARIABLES:
+    public static Dictionary<VoxelType, TextureData>    VoxelTextures   = new Dictionary<VoxelType, TextureData>();
+    public VoxelData                                    TextureData;
 
+    public static float                                 TextureBuffer   = 0.001f;
+    public static float                                 TileWidth;
+    public static float                                 TileHeight;
+
+    //  FUNCTIONS:
+    //  Function to load texture data when script is loaded.
     private void Awake()
     {
-        foreach (var item in textureData.DataList)
+        foreach (TextureData texture in TextureData.DataList)
         {
-            if (blockTextureDataDictionary.ContainsKey(item.VoxelType) == false)
+            if (VoxelTextures.ContainsKey(texture.VoxelType) == false)
             {
-                blockTextureDataDictionary.Add(item.VoxelType, item);
+                VoxelTextures.Add(texture.VoxelType, texture);
             };
         }
-        tileSizeX = textureData.TextureSizeX;
-        tileSizeY = textureData.TextureSizeY;
+
+        TileWidth   = TextureData.TextureSizeX;
+        TileHeight  = TextureData.TextureSizeY;
     }
 }

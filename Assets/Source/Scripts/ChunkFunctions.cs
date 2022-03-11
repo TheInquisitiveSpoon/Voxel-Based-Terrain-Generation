@@ -27,9 +27,9 @@ public static class ChunkFunctions
     {
         return  new Vector3Int
         {
-            x = Mathf.FloorToInt(x / (float)world.chunkSize)    * world.chunkSize,
-            y = Mathf.FloorToInt(y / (float)world.chunkHeight)  * world.chunkHeight,
-            z = Mathf.FloorToInt(z / (float)world.chunkSize)    * world.chunkSize
+            x = Mathf.FloorToInt(x / (float)world.ChunkWidth)    * world.ChunkWidth,
+            y = Mathf.FloorToInt(y / (float)world.ChunkHeight)  * world.ChunkHeight,
+            z = Mathf.FloorToInt(z / (float)world.ChunkWidth)    * world.ChunkWidth
         };
     }
     
@@ -69,7 +69,7 @@ public static class ChunkFunctions
         }
 
         //  Returns voxel type if outside of currrent chunk.
-        return chunkData.World.GetBlockFromChunkCoordinates(chunkData, chunkData.WorldPos.x + x, chunkData.WorldPos.y + y, chunkData.WorldPos.z + z);
+        return chunkData.World.GetVoxelTypeFromChunkPos(chunkData, chunkData.WorldPos.x + x, chunkData.WorldPos.y + y, chunkData.WorldPos.z + z);
     }
 
     //  Retrieves the voxel position from the chunk index.

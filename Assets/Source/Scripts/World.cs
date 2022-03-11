@@ -1,74 +1,99 @@
+//  World.cs - Represents the game world, including world data and functions to generate and handle chunks and voxels.
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//  CLASS:
 public class World : MonoBehaviour
 {
-    public int mapSizeInChunks = 6;
-    public int chunkSize = 16, chunkHeight = 100;
-    public int waterThreshold = 50;
-    public float noiseScale = 0.03f;
-    public GameObject chunkPrefab;
+    //  VARIABLES:
+    public GameObject                       ChunkObject;
 
-    //
-    public float gravity = -20.0f;
-    //
+    Dictionary<Vector3Int, ChunkRenderer>   Chunks          = new Dictionary<Vector3Int, ChunkRenderer>();
+    Dictionary<Vector3Int, ChunkData>       ChunkDataList   = new Dictionary<Vector3Int, ChunkData>();
 
-    Dictionary<Vector3Int, ChunkData> chunkDataDictionary = new Dictionary<Vector3Int, ChunkData>();
-    Dictionary<Vector3Int, ChunkRenderer> chunkDictionary = new Dictionary<Vector3Int, ChunkRenderer>();
+    public int                              NumChunks       = 6;
+    public int                              ChunkWidth      = 16;
+    public int                              ChunkHeight     = 100;
+    public int                              WaterLevel      = 50;
+    public float                            Noise           = 0.03f;
+    public float                            Gravity         = -20.0f;
 
+    //  FUNCTIONS:
+    //  Generates world when script is loaded.
     public void Awake()
     {
         GenerateWorld();
     }
 
+    //  Generates a number of chunks and renders each of the chunks on screen.
     public void GenerateWorld()
     {
-        chunkDataDictionary.Clear();
-        foreach (ChunkRenderer chunk in chunkDictionary.Values)
+        ChunkDataList.Clear();
+
+        //  Destroys existing chunk game objects
+        foreach (ChunkRenderer chunk in Chunks.Values)
         {
             Destroy(chunk.gameObject);
         }
-        chunkDictionary.Clear();
 
-        for (int x = 0; x < mapSizeInChunks; x++)
+        Chunks.Clear();
+
+        //  Creates new chunks by generating the voxels within each chunk.
+        for (int x = 0; x < NumChunks; x++)
         {
-            for (int z = 0; z < mapSizeInChunks; z++)
+            for (int z = 0; z < NumChunks; z++)
             {
-
-                ChunkData data = new ChunkData(this, new Vector3Int(x * chunkSize, 0, z * chunkSize), chunkSize, chunkHeight);
+                //  Generate voxels for this chunk and add it to the list.
+                ChunkData data = new ChunkData(this, new Vector3Int(x * ChunkWidth, 0, z * ChunkWidth), ChunkWidth, ChunkHeight);
                 GenerateVoxels(data);
-                chunkDataDictionary.Add(data.WorldPos, data);
+                ChunkDataList.Add(data.WorldPos, data);
             }
         }
 
-        foreach (ChunkData data in chunkDataDictionary.Values)
+        //  Generates the chunk mesh and collider, as well as renders the new chunk.
+        foreach (ChunkData data in ChunkDataList.Values)
         {
+            //  Gets mesh data.
             MeshHandler meshData = ChunkFunctions.GetMeshData(data);
-            GameObject chunkObject = Instantiate(chunkPrefab, data.WorldPos, Quaternion.identity);
+
+            //  Creates a new gameobject for the chunk.
+            GameObject chunkObject = Instantiate(ChunkObject, data.WorldPos, Quaternion.identity);
+
+            //  Renders the new chunk using the data.  
             ChunkRenderer chunkRenderer = chunkObject.GetComponent<ChunkRenderer>();
-            chunkDictionary.Add(data.WorldPos, chunkRenderer);
             chunkRenderer.SetChunkData(data);
             chunkRenderer.UpdateChunk(meshData);
 
+            //  Adds chunk to the list.
+            Chunks.Add(data.WorldPos, chunkRenderer);
         }
     }
 
+    //  Handles generation of the voxels for each chunk within the game, using Perlin noise to generate shapes of the landmass.
     private void GenerateVoxels(ChunkData data)
     {
         for (int x = 0; x < data.Width; x++)
         {
             for (int z = 0; z < data.Width; z++)
             {
-                float noiseValue = Mathf.PerlinNoise((data.WorldPos.x + x) * noiseScale, (data.WorldPos.z + z) * noiseScale);
-                int groundPosition = Mathf.RoundToInt(noiseValue * chunkHeight);
-                for (int y = 0; y < chunkHeight; y++)
+                //  Determines the 2D noise value for the current voxel.
+                float noise = Mathf.PerlinNoise((data.WorldPos.x + x) * Noise, (data.WorldPos.z + z) * Noise);
+                
+                //  Determines the ground level of the noise.
+                int groundLevel = Mathf.RoundToInt(noise * ChunkHeight);
+
+                //  Alters voxel type base on current height within the chunk.
+                for (int y = 0; y < ChunkHeight; y++)
                 {
                     VoxelType voxelType = VoxelType.Dirt;
-                    if (y > groundPosition)
+
+                    //  Places correct voxel type based on the groundLevel and waterLevel
+                    if (y > groundLevel)
                     {
-                        if (y < waterThreshold)
+                        if (y < WaterLevel)
                         {
                             voxelType = VoxelType.Water;
                         }
@@ -78,27 +103,30 @@ public class World : MonoBehaviour
                         }
 
                     }
-                    else if (y == groundPosition)
+                    else if (y == groundLevel)
                     {
                         voxelType = VoxelType.Grass;
                     }
 
+                    //  Sets the current voxel type of the voxel within the chunk.
                     ChunkFunctions.SetVoxelType(data, new Vector3Int(x, y, z), voxelType);
                 }
             }
         }
     }
 
-    internal VoxelType GetBlockFromChunkCoordinates(ChunkData chunkData, int x, int y, int z)
+    //  Returns the voxel type of the voxel at the specified chunk position.
+    internal VoxelType GetVoxelTypeFromChunkPos(ChunkData chunkData, int x, int y, int z)
     {
         Vector3Int pos = ChunkFunctions.GetChunkPosFromVoxel(this, x, y, z);
-        ChunkData containerChunk = null;
 
-        chunkDataDictionary.TryGetValue(pos, out containerChunk);
+        //  Attempts to find the current chunk and returns it to the tempChunk, returns Nothing if null.
+        ChunkData tempChunk = null;
+        ChunkDataList.TryGetValue(pos, out tempChunk);
+        if (tempChunk == null) { return VoxelType.Nothing; }
 
-        if (containerChunk == null)
-            return VoxelType.Nothing;
-        Vector3Int blockInCHunkCoordinates = ChunkFunctions.GetVoxelChunkPos(containerChunk, new Vector3Int(x, y, z));
-        return ChunkFunctions.GetVoxelTypeFromPos(containerChunk, blockInCHunkCoordinates.x, blockInCHunkCoordinates.y, blockInCHunkCoordinates.z);
+        //  Gets the chunkPos of the voxel, then returns the voxel type using the position.
+        Vector3Int chunkPos = ChunkFunctions.GetVoxelChunkPos(tempChunk, new Vector3Int(x, y, z));
+        return ChunkFunctions.GetVoxelTypeFromPos(tempChunk, chunkPos.x, chunkPos.y, chunkPos.z);
     }
 }

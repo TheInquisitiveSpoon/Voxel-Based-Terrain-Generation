@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
         //  Add jump velocity to enable jumping if grounded.
         if (Input.GetButtonDown("Jump") && IsGrounded)
         {
-            Velocity.y = Mathf.Sqrt(JumpPower * -2.0f * CurrentWorld.gravity);
+            Velocity.y = Mathf.Sqrt(JumpPower * -2.0f * CurrentWorld.Gravity);
         }
 
         //  Get Player input from axis.
@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         Controller.Move(moveDirection * MoveSpeed * Time.deltaTime);
 
         //  Move Player by current gravity velocity.
-        Velocity.y += CurrentWorld.gravity * Time.deltaTime;
+        Velocity.y += CurrentWorld.Gravity * Time.deltaTime;
         Controller.Move(Velocity * Time.deltaTime);
     }
 }

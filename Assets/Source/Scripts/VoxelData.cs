@@ -12,21 +12,21 @@ using UnityEngine;
 //  Class to handle Texture data of each block.
 public class VoxelData : ScriptableObject
 {
-    public float            TextureSizeX;
-    public float            TextureSizeY;
-    public List<TextureData> DataList;
+    public float                TextureSizeX;
+    public float                TextureSizeY;
+    public List<TextureData>    DataList;
 }
 
 //  Class to handle individual block data for storing in the Data List.
 [Serializable]
 public class TextureData
 {
-    public VoxelType VoxelType;
+    public VoxelType    VoxelType;
 
-    public Vector2Int TopTexture;
-    public Vector2Int BottomTexture;
-    public Vector2Int SideTexture;
+    public Vector2Int   TopTexture;
+    public Vector2Int   BottomTexture;
+    public Vector2Int   SideTexture;
 
-    public bool IsSolid = true;
-    public bool GeneratesCollider = true;
+    public bool         IsSolid             = true;
+    public bool         GeneratesCollider   = true;
 }

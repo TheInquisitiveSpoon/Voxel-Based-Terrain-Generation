@@ -1,78 +1,76 @@
+//  VoxelFunctions - Necessary function to manipulate the voxels and their data.
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//  CLASS:
 public static class VoxelFunctions
 {
+    //  ARRAY:
+    //  List of possible directions for correctly drawing meshes.
     private static Direction[] directions =
     {
-        Direction.Backward,
+        Direction.Right,
+        Direction.Left,
+        Direction.Upwards,
         Direction.Downwards,
         Direction.Forward,
-        Direction.Left,
-        Direction.Right,
-        Direction.Upwards
-    };
+        Direction.Backward,
+    };  
 
-    public static Vector3Int GetVector(this Direction direction)
+    //  FUNCTIONS:
+    //  Returns the direction vector depending on the necessary direction passed, used for retrieving neighbour voxel.
+    public static Vector3Int GetDirectionVector(Direction direction)
     {
         return direction switch
         {
-            Direction.Upwards => Vector3Int.up,
+            Direction.Right     => Vector3Int.right,
+            Direction.Left      => Vector3Int.left,
+            Direction.Upwards   => Vector3Int.up,
             Direction.Downwards => Vector3Int.down,
-            Direction.Right => Vector3Int.right,
-            Direction.Left => Vector3Int.left,
-            Direction.Forward => Vector3Int.forward,
-            Direction.Backward => Vector3Int.back,
-            _ => throw new Exception("Invalid input direction")
+            Direction.Forward   => Vector3Int.forward,
+            Direction.Backward  => Vector3Int.back,
         };
     }
-
-    public static MeshHandler GetMeshData
-        (ChunkData chunk, int x, int y, int z, MeshHandler meshData, VoxelType blockType)
+    
+    //  
+    public static MeshHandler GetMeshData (ChunkData chunk, int x, int y, int z, MeshHandler meshData, VoxelType voxelType)
     {
-        if (blockType == VoxelType.Air || blockType == VoxelType.Nothing)
-            return meshData;
+        //  Return nothing empty mesh for Air and Nothing voxels.
+        if (voxelType == VoxelType.Air || voxelType == VoxelType.Nothing) { return meshData; }
 
+        //  Loop through each neighbour voxel to determine it's type.
         foreach (Direction direction in directions)
         {
-            var neighbourBlockCoordinates = new Vector3Int(x, y, z) + GetVector(direction);
-            var neighbourBlockType = ChunkFunctions.GetVoxelTypeFromPos(chunk, neighbourBlockCoordinates.x, neighbourBlockCoordinates.y, neighbourBlockCoordinates.z);
+            Vector3Int  neighbourPos    = new Vector3Int(x, y, z) + GetDirectionVector(direction);
+            VoxelType   neighbourType   = ChunkFunctions.GetVoxelTypeFromPos(chunk, neighbourPos.x, neighbourPos.y, neighbourPos.z);
 
-            if (neighbourBlockType != VoxelType.Nothing && VoxelManager.blockTextureDataDictionary[neighbourBlockType].IsSolid == false)
+            //  Draws face if neighbour is any non-solid voxel.
+            if (neighbourType != VoxelType.Nothing && VoxelManager.VoxelTextures[neighbourType].IsSolid == false)
             {
-
-                if (blockType == VoxelType.Water)
+                //  Draws face if current voxel is water and is next to Air, or if current voxel is not water.
+                if (voxelType == VoxelType.Water)
                 {
-                    if (neighbourBlockType == VoxelType.Air)
-                        meshData.WaterMesh = GetFaceDataIn(direction, chunk, x, y, z, meshData.WaterMesh, blockType);
+                    if (neighbourType == VoxelType.Air)
+                        meshData.WaterMesh = GetFaceDataIn(direction, chunk, x, y, z, meshData.WaterMesh, voxelType);
                 }
                 else
                 {
-                    meshData = GetFaceDataIn(direction, chunk, x, y, z, meshData, blockType);
+                    meshData = GetFaceDataIn(direction, chunk, x, y, z, meshData, voxelType);
                 }
-
             }
         }
 
         return meshData;
     }
 
-    public static MeshHandler GetFaceDataIn(Direction direction, ChunkData chunk, int x, int y, int z, MeshHandler meshData, VoxelType blockType)
+    //  Correctly adds the mesh vertices to the list based on the order of vertices for rendering the mesh.
+    public static void GetFaceVertices(Direction direction, int x, int y, int z, MeshHandler meshData, VoxelType voxelType)
     {
-        GetFaceVertices(direction, x, y, z, meshData, blockType);
-        meshData.AddQuadTriangles(VoxelManager.blockTextureDataDictionary[blockType].GeneratesCollider);
-        meshData.UVs.AddRange(FaceUVs(direction, blockType));
+        bool    generatesCollider   = VoxelManager.VoxelTextures[voxelType].GeneratesCollider;
 
-
-        return meshData;
-    }
-
-    public static void GetFaceVertices(Direction direction, int x, int y, int z, MeshHandler meshData, VoxelType blockType)
-    {
-        var generatesCollider = VoxelManager.blockTextureDataDictionary[blockType].GeneratesCollider;
-        //order of vertices matters for the normals and how we render the mesh
+        //  Adds vertices in different orders based on the direction.
         switch (direction)
         {
             case Direction.Backward:
@@ -81,12 +79,14 @@ public static class VoxelFunctions
                 meshData.AddVertex(new Vector3(x + 0.5f, y + 0.5f, z - 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x + 0.5f, y - 0.5f, z - 0.5f), generatesCollider);
                 break;
+
             case Direction.Forward:
                 meshData.AddVertex(new Vector3(x + 0.5f, y - 0.5f, z + 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x + 0.5f, y + 0.5f, z + 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x - 0.5f, y + 0.5f, z + 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x - 0.5f, y - 0.5f, z + 0.5f), generatesCollider);
                 break;
+
             case Direction.Left:
                 meshData.AddVertex(new Vector3(x - 0.5f, y - 0.5f, z + 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x - 0.5f, y + 0.5f, z + 0.5f), generatesCollider);
@@ -100,50 +100,70 @@ public static class VoxelFunctions
                 meshData.AddVertex(new Vector3(x + 0.5f, y + 0.5f, z + 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x + 0.5f, y - 0.5f, z + 0.5f), generatesCollider);
                 break;
+
             case Direction.Downwards:
                 meshData.AddVertex(new Vector3(x - 0.5f, y - 0.5f, z - 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x + 0.5f, y - 0.5f, z - 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x + 0.5f, y - 0.5f, z + 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x - 0.5f, y - 0.5f, z + 0.5f), generatesCollider);
                 break;
+
             case Direction.Upwards:
                 meshData.AddVertex(new Vector3(x - 0.5f, y + 0.5f, z + 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x + 0.5f, y + 0.5f, z + 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x + 0.5f, y + 0.5f, z - 0.5f), generatesCollider);
                 meshData.AddVertex(new Vector3(x - 0.5f, y + 0.5f, z - 0.5f), generatesCollider);
                 break;
-            default:
-                break;
         }
     }
 
-    public static Vector2[] FaceUVs(Direction direction, VoxelType blockType)
+    //  Returns an array of UVs for the face of the mesh, using the voxel type to determine the tile position of the face on the image.
+    public static Vector2[] FaceUVs(Direction direction, VoxelType voxelType)
     {
+        //  Array of 4 due to having 4 UVs per square face.
         Vector2[] UVs = new Vector2[4];
-        var tilePos = TexturePosition(direction, blockType);
 
-        UVs[0] = new Vector2(VoxelManager.tileSizeX * tilePos.x + VoxelManager.tileSizeX - VoxelManager.textureOffset,
-            VoxelManager.tileSizeY * tilePos.y + VoxelManager.textureOffset);
+        //  Gets the 2D position of the tile.
+        Vector2Int tilePos = TexturePosition(direction, voxelType);
 
-        UVs[1] = new Vector2(VoxelManager.tileSizeX * tilePos.x + VoxelManager.tileSizeX - VoxelManager.textureOffset,
-            VoxelManager.tileSizeY * tilePos.y + VoxelManager.tileSizeY - VoxelManager.textureOffset);
-
-        UVs[2] = new Vector2(VoxelManager.tileSizeX * tilePos.x + VoxelManager.textureOffset,
-            VoxelManager.tileSizeY * tilePos.y + VoxelManager.tileSizeY - VoxelManager.textureOffset);
-
-        UVs[3] = new Vector2(VoxelManager.tileSizeX * tilePos.x + VoxelManager.textureOffset,
-            VoxelManager.tileSizeY * tilePos.y + VoxelManager.textureOffset);
+        //  Sets the UVs to the correct positions, using a buffer to eliminate teared edges.
+        UVs[0] = new Vector2(VoxelManager.TileWidth * tilePos.x + VoxelManager.TileWidth - VoxelManager.TextureBuffer,
+            VoxelManager.TileHeight * tilePos.y + VoxelManager.TextureBuffer);
+        UVs[1] = new Vector2(VoxelManager.TileWidth * tilePos.x + VoxelManager.TileWidth - VoxelManager.TextureBuffer,
+            VoxelManager.TileHeight * tilePos.y + VoxelManager.TileHeight - VoxelManager.TextureBuffer);
+        UVs[2] = new Vector2(VoxelManager.TileWidth * tilePos.x + VoxelManager.TextureBuffer,
+            VoxelManager.TileHeight * tilePos.y + VoxelManager.TileHeight - VoxelManager.TextureBuffer);
+        UVs[3] = new Vector2(VoxelManager.TileWidth * tilePos.x + VoxelManager.TextureBuffer,
+            VoxelManager.TileHeight * tilePos.y + VoxelManager.TextureBuffer);
 
         return UVs;
     }
 
-    public static Vector2Int TexturePosition(Direction direction, VoxelType blockType)
+    //  Gets the data of the face and adds it to the mesh.
+    public static MeshHandler GetFaceDataIn(Direction direction, ChunkData chunk, int x, int y, int z, MeshHandler meshData, VoxelType voxelType)
+    {
+        //  Gets the vertices of the face.
+        GetFaceVertices(direction, x, y, z, meshData, voxelType);
+        
+        //  Splits the face into triangles and adds them to the mesh.
+        meshData.AddQuadTriangles(VoxelManager.VoxelTextures[voxelType].GeneratesCollider);
+
+        //  Gets the UVs to determine the part of the image to use for that face.
+        meshData.UVs.AddRange(FaceUVs(direction, voxelType));
+
+        return meshData;
+    }
+
+    //  Gets the correct side of the face to use for determining the UVs for the mesh.
+    public static Vector2Int TexturePosition(Direction direction, VoxelType voxelType)
     {
         return direction switch
         {
-            Direction.Upwards => VoxelManager.blockTextureDataDictionary[blockType].TopTexture,
-            Direction.Downwards => VoxelManager.blockTextureDataDictionary[blockType].BottomTexture,
-            _ => VoxelManager.blockTextureDataDictionary[blockType].SideTexture
+            Direction.Upwards => VoxelManager.VoxelTextures[voxelType].TopTexture,
+            Direction.Downwards => VoxelManager.VoxelTextures[voxelType].BottomTexture,
+
+            //  Used to handle any other direction, in this case the side faces.
+            _ => VoxelManager.VoxelTextures[voxelType].SideTexture
         };
     }
 }

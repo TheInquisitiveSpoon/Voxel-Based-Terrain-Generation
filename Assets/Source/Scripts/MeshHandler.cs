@@ -14,7 +14,7 @@ public class MeshHandler
     public List<int>        ColliderTriangles   = new List<int>();
 
     public MeshHandler      WaterMesh;
-    private bool            IsMainMesh          = true;
+    private bool            IsPrimaryMesh          = true;
 
     //  FUNCTIONS:
     //  Function to add vertex to list and add to collider list if it generates collision.
@@ -51,9 +51,10 @@ public class MeshHandler
         }
     }
 
-    public MeshHandler(bool isMainMesh)
+    //  Checks if the mesh is from the primary mesh file or for water.
+    public MeshHandler(bool isPrimaryMesh)
     {
-        if (isMainMesh)
+        if (isPrimaryMesh)
         {
             WaterMesh = new MeshHandler(false);
         }
