@@ -29,8 +29,8 @@ public static class VoxelFunctions
         };
     }
 
-    public static MeshData GetMeshData
-        (ChunkData chunk, int x, int y, int z, MeshData meshData, VoxelType blockType)
+    public static MeshHandler GetMeshData
+        (ChunkData chunk, int x, int y, int z, MeshHandler meshData, VoxelType blockType)
     {
         if (blockType == VoxelType.Air || blockType == VoxelType.Nothing)
             return meshData;
@@ -38,7 +38,7 @@ public static class VoxelFunctions
         foreach (Direction direction in directions)
         {
             var neighbourBlockCoordinates = new Vector3Int(x, y, z) + GetVector(direction);
-            var neighbourBlockType = Chunk.GetBlockFromChunkCoordinates(chunk, neighbourBlockCoordinates);
+            var neighbourBlockType = ChunkFunctions.GetVoxelTypeFromPos(chunk, neighbourBlockCoordinates.x, neighbourBlockCoordinates.y, neighbourBlockCoordinates.z);
 
             if (neighbourBlockType != VoxelType.Nothing && VoxelManager.blockTextureDataDictionary[neighbourBlockType].IsSolid == false)
             {
@@ -59,7 +59,7 @@ public static class VoxelFunctions
         return meshData;
     }
 
-    public static MeshData GetFaceDataIn(Direction direction, ChunkData chunk, int x, int y, int z, MeshData meshData, VoxelType blockType)
+    public static MeshHandler GetFaceDataIn(Direction direction, ChunkData chunk, int x, int y, int z, MeshHandler meshData, VoxelType blockType)
     {
         GetFaceVertices(direction, x, y, z, meshData, blockType);
         meshData.AddQuadTriangles(VoxelManager.blockTextureDataDictionary[blockType].GeneratesCollider);
@@ -69,7 +69,7 @@ public static class VoxelFunctions
         return meshData;
     }
 
-    public static void GetFaceVertices(Direction direction, int x, int y, int z, MeshData meshData, VoxelType blockType)
+    public static void GetFaceVertices(Direction direction, int x, int y, int z, MeshHandler meshData, VoxelType blockType)
     {
         var generatesCollider = VoxelManager.blockTextureDataDictionary[blockType].GeneratesCollider;
         //order of vertices matters for the normals and how we render the mesh

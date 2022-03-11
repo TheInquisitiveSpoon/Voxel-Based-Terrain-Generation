@@ -1,23 +1,28 @@
+//  ChunkData.cs - Data and constructor for chunks.
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//  CLASS:
 public class ChunkData
 {
-    public VoxelType[] blocks;
-    public int chunkSize = 16;
-    public int chunkHeight = 100;
-    public World worldReference;
-    public Vector3Int worldPosition;
+    //  VARIABLES:
+    public World        World;
+    public Vector3Int   WorldPos;
+    public VoxelType[]  Voxels;
 
-    public bool modifiedByThePlayer = false;
+    public int          Width       = 16;
+    public int          Height      = 100;
+    public bool         IsModified  = false;
 
-    public ChunkData(int chunkSize, int chunkHeight, World world, Vector3Int worldPosition)
+    //  CONSTRUCTOR:
+    public ChunkData(World world, Vector3Int worldPos, int width, int height)
     {
-        this.chunkHeight = chunkHeight;
-        this.chunkSize = chunkSize;
-        this.worldReference = world;
-        this.worldPosition = worldPosition;
-        blocks = new VoxelType[chunkSize * chunkHeight * chunkSize];
+        World       = world;
+        WorldPos    = worldPos;
+        Width       = width;
+        Height      = height;
+        Voxels      = new VoxelType[width * height * width];
     }
 }

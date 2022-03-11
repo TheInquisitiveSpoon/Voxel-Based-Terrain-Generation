@@ -37,19 +37,19 @@ public class World : MonoBehaviour
             for (int z = 0; z < mapSizeInChunks; z++)
             {
 
-                ChunkData data = new ChunkData(chunkSize, chunkHeight, this, new Vector3Int(x * chunkSize, 0, z * chunkSize));
+                ChunkData data = new ChunkData(this, new Vector3Int(x * chunkSize, 0, z * chunkSize), chunkSize, chunkHeight);
                 GenerateVoxels(data);
-                chunkDataDictionary.Add(data.worldPosition, data);
+                chunkDataDictionary.Add(data.WorldPos, data);
             }
         }
 
         foreach (ChunkData data in chunkDataDictionary.Values)
         {
-            MeshData meshData = Chunk.GetChunkMeshData(data);
-            GameObject chunkObject = Instantiate(chunkPrefab, data.worldPosition, Quaternion.identity);
+            MeshHandler meshData = ChunkFunctions.GetMeshData(data);
+            GameObject chunkObject = Instantiate(chunkPrefab, data.WorldPos, Quaternion.identity);
             ChunkRenderer chunkRenderer = chunkObject.GetComponent<ChunkRenderer>();
-            chunkDictionary.Add(data.worldPosition, chunkRenderer);
-            chunkRenderer.InitializeChunk(data);
+            chunkDictionary.Add(data.WorldPos, chunkRenderer);
+            chunkRenderer.SetChunkData(data);
             chunkRenderer.UpdateChunk(meshData);
 
         }
@@ -57,11 +57,11 @@ public class World : MonoBehaviour
 
     private void GenerateVoxels(ChunkData data)
     {
-        for (int x = 0; x < data.chunkSize; x++)
+        for (int x = 0; x < data.Width; x++)
         {
-            for (int z = 0; z < data.chunkSize; z++)
+            for (int z = 0; z < data.Width; z++)
             {
-                float noiseValue = Mathf.PerlinNoise((data.worldPosition.x + x) * noiseScale, (data.worldPosition.z + z) * noiseScale);
+                float noiseValue = Mathf.PerlinNoise((data.WorldPos.x + x) * noiseScale, (data.WorldPos.z + z) * noiseScale);
                 int groundPosition = Mathf.RoundToInt(noiseValue * chunkHeight);
                 for (int y = 0; y < chunkHeight; y++)
                 {
@@ -83,7 +83,7 @@ public class World : MonoBehaviour
                         voxelType = VoxelType.Grass;
                     }
 
-                    Chunk.SetBlock(data, new Vector3Int(x, y, z), voxelType);
+                    ChunkFunctions.SetVoxelType(data, new Vector3Int(x, y, z), voxelType);
                 }
             }
         }
@@ -91,14 +91,14 @@ public class World : MonoBehaviour
 
     internal VoxelType GetBlockFromChunkCoordinates(ChunkData chunkData, int x, int y, int z)
     {
-        Vector3Int pos = Chunk.ChunkPositionFromBlockCoords(this, x, y, z);
+        Vector3Int pos = ChunkFunctions.GetChunkPosFromVoxel(this, x, y, z);
         ChunkData containerChunk = null;
 
         chunkDataDictionary.TryGetValue(pos, out containerChunk);
 
         if (containerChunk == null)
             return VoxelType.Nothing;
-        Vector3Int blockInCHunkCoordinates = Chunk.GetBlockInChunkCoordinates(containerChunk, new Vector3Int(x, y, z));
-        return Chunk.GetBlockFromChunkCoordinates(containerChunk, blockInCHunkCoordinates);
+        Vector3Int blockInCHunkCoordinates = ChunkFunctions.GetVoxelChunkPos(containerChunk, new Vector3Int(x, y, z));
+        return ChunkFunctions.GetVoxelTypeFromPos(containerChunk, blockInCHunkCoordinates.x, blockInCHunkCoordinates.y, blockInCHunkCoordinates.z);
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // CLASS:
-public class MeshData
+public class MeshHandler
 {
     //  VARIABLES:
     public List<Vector3>    Vertices            = new List<Vector3>();
@@ -13,7 +13,7 @@ public class MeshData
     public List<Vector3>    ColliderVertices    = new List<Vector3>();
     public List<int>        ColliderTriangles   = new List<int>();
 
-    public MeshData         WaterMesh;
+    public MeshHandler      WaterMesh;
     private bool            IsMainMesh          = true;
 
     //  FUNCTIONS:
@@ -51,11 +51,11 @@ public class MeshData
         }
     }
 
-    public MeshData(bool isMainMesh)
+    public MeshHandler(bool isMainMesh)
     {
         if (isMainMesh)
         {
-            WaterMesh = new MeshData(false);
+            WaterMesh = new MeshHandler(false);
         }
     }
 }
