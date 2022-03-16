@@ -1,4 +1,4 @@
-//  BlockData.cs - Script for creating a Unity object containing individual block data.
+//  VoxelData.cs - Script for creating a Unity object containing individual voxel data.
 
 using System;
 using System.Collections;
@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //  Creates a Unity inspector menu
-[CreateAssetMenu(fileName = "Block Data", menuName = "Block data")]
+[CreateAssetMenu(fileName = "Voxel Data", menuName = "Data/Voxel data")]
 
 //  CLASSES:
-//  Class to handle Texture data of each block.
+//  Class to handle Texture data of each voxel.
 public class VoxelData : ScriptableObject
 {
     public float                TextureSizeX;
@@ -17,7 +17,7 @@ public class VoxelData : ScriptableObject
     public List<TextureData>    DataList;
 }
 
-//  Class to handle individual block data for storing in the Data List.
+//  Class to handle individual voxel data for storing in the Data List.
 [Serializable]
 public class TextureData
 {

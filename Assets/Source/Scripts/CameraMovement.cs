@@ -17,7 +17,7 @@ public class CameraMovement : MonoBehaviour
 
     bool                IsFirstPerson       = true;
     bool                IsInvertedY         = false;
-    bool                IsCursorHidden      = false;
+    public bool         IsCursorHidden      = false;
 
     //  FUNCTIONS:
     // Function to update the script during runtime.
@@ -35,24 +35,27 @@ public class CameraMovement : MonoBehaviour
             ShowHideCursor();
         }
 
-        //  Gets Movement input for X axis.
-        float mouseX = Input.GetAxis("Mouse X") * SensitivityX * Time.deltaTime;
-
-        //  Handles camera Y movement in first person, using clamping to keep in range of view.
-        if (IsFirstPerson)
+        if (!IsCursorHidden)
         {
-            float mouseY = Input.GetAxis("Mouse Y") * SensitivityY * Time.deltaTime;
+            //  Gets Movement input for X axis.
+            float mouseX = Input.GetAxis("Mouse X") * SensitivityX * Time.deltaTime;
 
-            if (!IsInvertedY) { CurrentYRotation -= mouseY; }
-            else { CurrentYRotation += mouseY; }
+            //  Handles camera Y movement in first person, using clamping to keep in range of view.
+            if (IsFirstPerson)
+            {
+                float mouseY = Input.GetAxis("Mouse Y") * SensitivityY * Time.deltaTime;
 
-            CurrentYRotation = Mathf.Clamp(CurrentYRotation, -80.0f, 80.0f);
-            transform.localRotation = Quaternion.Euler(CurrentYRotation, 0.0f, 0.0f);
+                if (!IsInvertedY) { CurrentYRotation -= mouseY; }
+                else { CurrentYRotation += mouseY; }
+
+                CurrentYRotation = Mathf.Clamp(CurrentYRotation, -80.0f, 80.0f);
+                transform.localRotation = Quaternion.Euler(CurrentYRotation, 0.0f, 0.0f);
+            }
+
+            //  Rotates using mouse X Input.
+            CurrentXRotation += mouseX;
+            Player.transform.Rotate(Vector3.up * mouseX);
         }
-
-        //  Rotates using mouse X Input.
-        CurrentXRotation += mouseX;
-        Player.transform.Rotate(Vector3.up * mouseX);
     }
 
     //  Function to enable swapping between first and third person.

@@ -4,21 +4,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //  CLASS:
 public class World : MonoBehaviour
 {
     //  VARIABLES:
+    public GameObject                       Player;
+    public TerrainGenerator                 TerrainGenerator;
+    public InputField                       SeedInputField;
     public GameObject                       ChunkObject;
 
     Dictionary<Vector3Int, ChunkRenderer>   Chunks          = new Dictionary<Vector3Int, ChunkRenderer>();
     Dictionary<Vector3Int, ChunkData>       ChunkDataList   = new Dictionary<Vector3Int, ChunkData>();
 
-    public int                              NumChunks       = 6;
+    public string                           Seed;
+    [Range(8, 32)]
+    public int                              NumChunks       = 8;
     public int                              ChunkWidth      = 16;
     public int                              ChunkHeight     = 100;
-    public int                              WaterLevel      = 50;
-    public float                            Noise           = 0.03f;
     public float                            Gravity         = -20.0f;
 
     //  FUNCTIONS:
@@ -41,6 +45,8 @@ public class World : MonoBehaviour
 
         Chunks.Clear();
 
+        SetSeed();
+
         //  Creates new chunks by generating the voxels within each chunk.
         for (int x = 0; x < NumChunks; x++)
         {
@@ -48,8 +54,8 @@ public class World : MonoBehaviour
             {
                 //  Generate voxels for this chunk and add it to the list.
                 ChunkData data = new ChunkData(this, new Vector3Int(x * ChunkWidth, 0, z * ChunkWidth), ChunkWidth, ChunkHeight);
-                GenerateVoxels(data);
-                ChunkDataList.Add(data.WorldPos, data);
+                ChunkData terrain = TerrainGenerator.GenerateChunk(data, Seed);
+                ChunkDataList.Add(terrain.WorldPos, terrain);
             }
         }
 
@@ -72,47 +78,15 @@ public class World : MonoBehaviour
         }
     }
 
+    public void SetSeed()
+    {
+        Seed = SeedInputField.text;
+    }
+
     //  Handles generation of the voxels for each chunk within the game, using Perlin noise to generate shapes of the landmass.
     private void GenerateVoxels(ChunkData data)
     {
-        for (int x = 0; x < data.Width; x++)
-        {
-            for (int z = 0; z < data.Width; z++)
-            {
-                //  Determines the 2D noise value for the current voxel.
-                float noise = Mathf.PerlinNoise((data.WorldPos.x + x) * Noise, (data.WorldPos.z + z) * Noise);
-                
-                //  Determines the ground level of the noise.
-                int groundLevel = Mathf.RoundToInt(noise * ChunkHeight);
 
-                //  Alters voxel type base on current height within the chunk.
-                for (int y = 0; y < ChunkHeight; y++)
-                {
-                    VoxelType voxelType = VoxelType.Dirt;
-
-                    //  Places correct voxel type based on the groundLevel and waterLevel
-                    if (y > groundLevel)
-                    {
-                        if (y < WaterLevel)
-                        {
-                            voxelType = VoxelType.Water;
-                        }
-                        else
-                        {
-                            voxelType = VoxelType.Air;
-                        }
-
-                    }
-                    else if (y == groundLevel)
-                    {
-                        voxelType = VoxelType.Grass;
-                    }
-
-                    //  Sets the current voxel type of the voxel within the chunk.
-                    ChunkFunctions.SetVoxelType(data, new Vector3Int(x, y, z), voxelType);
-                }
-            }
-        }
     }
 
     //  Returns the voxel type of the voxel at the specified chunk position.

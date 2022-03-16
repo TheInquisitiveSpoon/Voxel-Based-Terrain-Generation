@@ -1,10 +1,10 @@
-//  VoxelType.cs - Enumeration of block types in the game.
+//  VoxelType.cs - Enumeration of voxel types in the game.
 
 //  ENUM:
 public enum VoxelType
 {
-    Nothing,    //  Unpopulated block
-    Air,        //  Populated but empty block
+    Nothing,    //  Unpopulated voxel
+    Air,        //  Populated but empty voxel
     Water,
     Dirt,
     Grass,

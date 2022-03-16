@@ -42,7 +42,7 @@ public static class ChunkFunctions
         return  true;
     }
 
-    //  Changes the voxel type of a specific block in the chunk.
+    //  Changes the voxel type of a specific voxel in the chunk.
     public static void SetVoxelType(ChunkData chunkData, Vector3Int pos, VoxelType newVoxelType)
     {
         if (IsVoxelInChunk(chunkData, pos.x, pos.y, pos.z))
