@@ -7,6 +7,7 @@ public class BiomeGenerator : MonoBehaviour
 {
     public NoiseData NoiseData;
     public LayerHandler InitialLayer;
+    public List<LayerHandler> MiscHandlers;
 
     public  ChunkData GetChunkData(ChunkData data, int x, int z)
     {
@@ -17,6 +18,11 @@ public class BiomeGenerator : MonoBehaviour
         for (int y = 0; y < data.Height; y++)
         {
             InitialLayer.HandleLayer(data, new Vector3Int(x, y, z), groundLevel);
+        }
+
+        foreach (LayerHandler handler in MiscHandlers)
+        {
+            handler.HandleLayer(data, new Vector3Int(x, data.WorldPos.y, z), groundLevel);
         }
 
         return data;

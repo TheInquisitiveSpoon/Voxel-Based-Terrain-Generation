@@ -16,7 +16,7 @@ public static class NoiseGenerator
         float amplitude = 1;
         float amplitudeCount = 0;  // Used for normalizing result to 0.0 - 1.0 range
 
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < data.Octaves; i++)
         {
             finalVal += Mathf.PerlinNoise(((data.Seed % 1000) + x) * frequency, ((data.Seed % 1000) + z) * frequency) * amplitude;
 

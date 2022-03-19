@@ -95,12 +95,6 @@ public class World : MonoBehaviour
         NoiseData.Seed = Seed.GetHashCode();
     }
 
-    //  Handles generation of the voxels for each chunk within the game, using Perlin noise to generate shapes of the landmass.
-    private void GenerateVoxels(ChunkData data)
-    {
-
-    }
-
     //  Returns the voxel type of the voxel at the specified chunk position.
     internal VoxelType GetVoxelTypeFromChunkPos(ChunkData chunkData, int x, int y, int z)
     {

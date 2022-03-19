@@ -20,7 +20,7 @@ public class ChunkRenderer : MonoBehaviour
     MeshCollider    MeshCollider;
     Mesh            Mesh;
 
-    bool            IsShowingGizmos   = false;
+    bool            showGizmo   = false;
 
     //  FUNCTIONS:
     //  Sets component references and mesh when script is loaded.
@@ -74,7 +74,7 @@ public class ChunkRenderer : MonoBehaviour
     //  Draws outlines of selected chunks in the scene window if gizmos are enabled.
     private void OnDrawGizmos()
     {
-        if (IsShowingGizmos)
+        if (showGizmo)
         {
             //  Ensure application is running and that there is chunk data before eneabling selection.
             if (Application.isPlaying && ChunkData != null)
