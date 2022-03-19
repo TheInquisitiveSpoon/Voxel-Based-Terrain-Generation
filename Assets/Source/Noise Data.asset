@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c656d9e89944342bbda066401e104b, type: 3}
   m_Name: Noise Data
   m_EditorClassIdentifier: 
-  Magnitude: 0.01
-  Seed: 1502598935
-  Persistence: 0.5
-  Modifier: 1
+  Magnitude: 0.007
+  Seed: 371857150
+  Persistence: 0.45
+  Modifier: 1.25
   PlateauExponent: 5

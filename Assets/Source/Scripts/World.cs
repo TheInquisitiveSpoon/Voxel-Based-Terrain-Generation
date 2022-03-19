@@ -13,6 +13,7 @@ public class World : MonoBehaviour
     public GameObject                       Player;
     public TerrainGenerator                 TerrainGenerator;
     public InputField                       SeedInputField;
+    public NoiseData                        NoiseData;
     public GameObject                       ChunkObject;
 
     Dictionary<Vector3Int, ChunkRenderer>   Chunks          = new Dictionary<Vector3Int, ChunkRenderer>();
@@ -23,6 +24,7 @@ public class World : MonoBehaviour
     public int                              NumChunks       = 8;
     public int                              ChunkWidth      = 16;
     public int                              ChunkHeight     = 100;
+    public int                              WaterLevel      = 10;
     public float                            Gravity         = -20.0f;
 
     //  FUNCTIONS:
@@ -54,7 +56,7 @@ public class World : MonoBehaviour
             {
                 //  Generate voxels for this chunk and add it to the list.
                 ChunkData data = new ChunkData(this, new Vector3Int(x * ChunkWidth, 0, z * ChunkWidth), ChunkWidth, ChunkHeight);
-                ChunkData terrain = TerrainGenerator.GenerateChunk(data, Seed);
+                ChunkData terrain = TerrainGenerator.GenerateChunk(data);
                 ChunkDataList.Add(terrain.WorldPos, terrain);
             }
         }
@@ -76,11 +78,21 @@ public class World : MonoBehaviour
             //  Adds chunk to the list.
             Chunks.Add(data.WorldPos, chunkRenderer);
         }
+
+        Vector3 pos = Player.transform.position;
+        pos = new Vector3
+        {
+            x = ((NumChunks / 2) * (ChunkWidth)),
+            y = 100.0f,
+            z = ((NumChunks / 2) * (ChunkWidth)),
+        };
+        Player.transform.SetPositionAndRotation(pos, Quaternion.identity);
     }
 
     public void SetSeed()
     {
         Seed = SeedInputField.text;
+        NoiseData.Seed = Seed.GetHashCode();
     }
 
     //  Handles generation of the voxels for each chunk within the game, using Perlin noise to generate shapes of the landmass.

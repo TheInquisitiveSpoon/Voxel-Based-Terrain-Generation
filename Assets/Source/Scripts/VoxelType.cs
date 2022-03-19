@@ -10,6 +10,7 @@ public enum VoxelType
     Grass,
     Stone,
     Sand,
+    SandStone,
     Log,
     Leaves
 }
