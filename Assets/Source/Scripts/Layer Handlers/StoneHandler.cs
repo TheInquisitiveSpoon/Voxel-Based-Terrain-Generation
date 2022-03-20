@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class StoneHandler : LayerHandler
 {
-    public float stoneLimit = 0.3f;
-
     public World World;
     public NoiseData stoneNoiseData;
+    public DomainWarping DomainWarping;
+    public float stoneLimit = 0.3f;
+    public int StoneOffset;
 
     protected override bool AttemptHandle(ChunkData data, Vector3Int pos, int groundLevel)
     {
-        if (data.WorldPos.y > groundLevel) { return false; }
+        if (data.WorldPos.y > groundLevel + 1) { return false; }
 
-        float stoneNoise = NoiseGenerator.PerlinOctave(data.WorldPos.x + pos.x, data.WorldPos.z + pos.z, stoneNoiseData);
+        stoneNoiseData.Seed = World.Seed + StoneOffset;
+        float stoneNoise = DomainWarping.GenerateDomainWarp(data.WorldPos.x + pos.x, data.WorldPos.z + pos.z, stoneNoiseData);
 
         int endPosition = groundLevel;
         if (data.WorldPos.y < 0)

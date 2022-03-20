@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Stone Noise Data
   m_EditorClassIdentifier: 
   Octaves: 1
-  Magnitude: 0.007
-  Seed: 553
-  Persistence: 0.45
-  Modifier: 1.25
-  PlateauExponent: 5
+  Magnitude: 0.01
+  Seed: 100000
+  Persistence: 0.3
+  Modifier: 0.9
+  PlateauExponent: 3
