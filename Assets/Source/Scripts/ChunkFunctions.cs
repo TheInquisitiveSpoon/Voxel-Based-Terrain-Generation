@@ -10,7 +10,10 @@ public static class ChunkFunctions
     //  Gets the mesh data of all the voxels within the chunk, based on the voxel type.
     public static MeshHandler GetMeshData(ChunkData chunkData)
     {
-        MeshHandler    meshData    = new MeshHandler(true);
+        //  Creates a new mesh handler for the primary mesh and water mesh.
+        MeshHandler    meshData             = new MeshHandler();
+        meshData.WaterMesh                  = new MeshHandler();
+        meshData.WaterMesh.IsPrimaryMesh    = false;
 
         //  Loops through chunk retrieving data for each voxel.
         for (int i = 0; i < chunkData.Voxels.Length; i++)

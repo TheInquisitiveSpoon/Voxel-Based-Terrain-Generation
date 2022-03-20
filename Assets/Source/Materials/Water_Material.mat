@@ -21,19 +21,22 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Water_Material
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 9331ec7a0d3fcb743b16c33c18bb326d, type: 3}
   m_ShaderKeywords: _SPECULAR_SETUP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses:
   - SHADOWCASTER
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_97ca243c11e84945aa8eca9e2def1e14:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: 8df64b553d56eee4fade156308b3f4c0, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -91,6 +94,16 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_000d26351c8f41babf026d8693f596e7: 4
+    - Vector1_0bbc7a04d956404aa8ebaa762bbbfe94: 0
+    - Vector1_1b505ee021eb4f17a28cdeeeb7f1f154: 1
+    - Vector1_1c035a6c927545448e0fce658996910d: 0.7
+    - Vector1_4aa08a8f227847a5b8d1dca8d7bfc0ab: 1
+    - Vector1_4f14575cb6e947bbb69504311420aee0: 0
+    - Vector1_53c4ad9793ef489abe1297fa13f9d9fa: 40
+    - Vector1_5f9020c59942453aa397b887a0a25f71: 1
+    - Vector1_8a8bf5051af2468c8a1437a15c73561f: 0
+    - Vector1_9b28b11e710c4eb1bfbdaa17d702cbb9: 1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -118,6 +131,9 @@ Material:
     - _WorkflowMode: 0
     - _ZWrite: 0
     m_Colors:
+    - Color_a3882e7333a5461c939bce5a5cdbaf3b: {r: 1, g: 1, b: 1, a: 0}
+    - Color_d4c36b7668984294bcb3a26322bc9c5b: {r: 0.1745283, g: 0.22853512, b: 1, a: 0}
+    - Vector3_c6ed7198b4814202be464ded7350a821: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 0.2004717, g: 0.23344906, b: 0.8018868, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
