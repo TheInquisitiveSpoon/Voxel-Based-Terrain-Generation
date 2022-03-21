@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9c656d9e89944342bbda066401e104b, type: 3}
-  m_Name: Domain Warping X Data
+  m_Name: Stone Noise Data
   m_EditorClassIdentifier: 
-  Octaves: 3
-  Magnitude: 0.007
-  Seed: 10435
-  Persistence: 0.45
-  Modifier: 1.25
-  PlateauExponent: 5
+  Octaves: 1
+  Magnitude: 0.01
+  Seed: 100000
+  Persistence: 0.3
+  Modifier: 0.9
+  PlateauExponent: 3

@@ -11,7 +11,6 @@ public enum VoxelType
     Stone,
     Sand,
     SandStone,
-    Bedrock,
     Log,
     Leaves
 }
