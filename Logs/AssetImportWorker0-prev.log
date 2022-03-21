@@ -15,11 +15,19 @@ C:/Users/Niall/Desktop/UNI/4th Year/CO3808 - Project/Artefact/Voxel-Based-Terrai
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
+<<<<<<< HEAD
 30549
 Successfully changed project path to: C:/Users/Niall/Desktop/UNI/4th Year/CO3808 - Project/Artefact/Voxel-Based-Terrain-Generation
 C:/Users/Niall/Desktop/UNI/4th Year/CO3808 - Project/Artefact/Voxel-Based-Terrain-Generation
 Using Asset Import Pipeline V2.
 Refreshing native plugins compatible for Editor in 78.89 ms, found 2 plugins.
+=======
+25341
+Successfully changed project path to: C:/Users/Niall/Desktop/UNI/4th Year/CO3808 - Project/Artefact/Voxel-Based-Terrain-Generation
+C:/Users/Niall/Desktop/UNI/4th Year/CO3808 - Project/Artefact/Voxel-Based-Terrain-Generation
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 61.06 ms, found 2 plugins.
+>>>>>>> parent of 417f71f (still working with domain warp)
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.20f1 (41c4e627c95f)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.20f1/Editor/Data/Resources/UnitySubsystems
@@ -35,5 +43,9 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.20f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.20f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.20f1/Editor/Data/MonoBleedingEdge/etc'
+<<<<<<< HEAD
 Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56088
+=======
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56680
+>>>>>>> parent of 417f71f (still working with domain warp)
 Begin MonoManager ReloadAssembly

@@ -6,10 +6,12 @@ using UnityEngine;
 public class BiomeGenerator : MonoBehaviour
 {
     public NoiseData NoiseData;
-    public DomainWarping DomainWarping;
     public LayerHandler InitialLayer;
     public List<LayerHandler> MiscHandlers;
+<<<<<<< HEAD:Assets/Source/Scripts/Terrain/BiomeGenerator.cs
     public bool UseDomainWarping;
+=======
+>>>>>>> parent of 417f71f (still working with domain warp):Assets/Source/Scripts/BiomeGenerator.cs
 
     public  ChunkData GetChunkData(ChunkData data, int x, int z)
     {
@@ -32,6 +34,7 @@ public class BiomeGenerator : MonoBehaviour
 
     private int GetSurfaceHeight(int x, int z, int chunkHeight)
     {
+<<<<<<< HEAD:Assets/Source/Scripts/Terrain/BiomeGenerator.cs
         float height = 0;
         if (UseDomainWarping)
         {
@@ -42,6 +45,9 @@ public class BiomeGenerator : MonoBehaviour
              height = NoiseGenerator.PerlinOctave(x, z, NoiseData);
         }
 
+=======
+        float height = NoiseGenerator.PerlinOctave(x, z, NoiseData);
+>>>>>>> parent of 417f71f (still working with domain warp):Assets/Source/Scripts/BiomeGenerator.cs
         height = NoiseGenerator.Redistribute(height, NoiseData);
         return NoiseGenerator.RemapToChunkHeight(height, 0, chunkHeight);
     }
