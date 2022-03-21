@@ -18,6 +18,11 @@ public class BiomeGenerator : MonoBehaviour
         //  Alters voxel type base on current height within the chunk.
         for (int y = 0; y < data.Height; y++)
         {
+            if (y == 0)
+            {
+                ChunkFunctions.SetVoxelType(data, new Vector3Int(x, y, z), VoxelType.Bedrock);
+            }
+
             InitialLayer.HandleLayer(data, new Vector3Int(x, y, z), groundLevel);
         }
 
