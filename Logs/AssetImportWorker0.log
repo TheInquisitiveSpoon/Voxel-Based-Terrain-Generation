@@ -18,6 +18,9 @@ Logs/AssetImportWorker0.log
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 09a8e2d (wow)
 =======
 >>>>>>> parent of 09a8e2d (wow)
 =======
@@ -29,6 +32,7 @@ Using Asset Import Pipeline V2.
 Refreshing native plugins compatible for Editor in 54.47 ms, found 2 plugins.
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 27642
 Successfully changed project path to: C:/Users/Niall/Desktop/UNI/4th Year/CO3808 - Project/Artefact/Voxel-Based-Terrain-Generation
@@ -36,6 +40,8 @@ C:/Users/Niall/Desktop/UNI/4th Year/CO3808 - Project/Artefact/Voxel-Based-Terrai
 Using Asset Import Pipeline V2.
 Refreshing native plugins compatible for Editor in 74.47 ms, found 2 plugins.
 >>>>>>> parent of 417f71f (still working with domain warp)
+=======
+>>>>>>> parent of 09a8e2d (wow)
 =======
 >>>>>>> parent of 09a8e2d (wow)
 =======
@@ -55,6 +61,7 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.20f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.20f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.20f1/Editor/Data/MonoBleedingEdge/etc'
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -89,6 +96,8 @@ Domain Reload Profiling:
 =======
 =======
 >>>>>>> parent of 09a8e2d (wow)
+=======
+>>>>>>> parent of 09a8e2d (wow)
 Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56728
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
@@ -103,6 +112,9 @@ Domain Reload Profiling:
 	ReloadAssembly (1104ms)
 		BeginReloadAssembly (53ms)
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 09a8e2d (wow)
+=======
 >>>>>>> parent of 09a8e2d (wow)
 =======
 >>>>>>> parent of 09a8e2d (wow)
@@ -114,6 +126,9 @@ Domain Reload Profiling:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 09a8e2d (wow)
 =======
 >>>>>>> parent of 09a8e2d (wow)
 =======
@@ -157,6 +172,7 @@ Registering precompiled user dll's ...
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Registered in 0.003678 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
@@ -182,6 +198,8 @@ Domain Reload Profiling:
 =======
 =======
 >>>>>>> parent of 09a8e2d (wow)
+=======
+>>>>>>> parent of 09a8e2d (wow)
 Registered in 0.003678 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
@@ -193,6 +211,9 @@ Domain Reload Profiling:
 	ReloadAssembly (1194ms)
 		BeginReloadAssembly (159ms)
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 09a8e2d (wow)
+=======
 >>>>>>> parent of 09a8e2d (wow)
 =======
 >>>>>>> parent of 09a8e2d (wow)
@@ -203,6 +224,9 @@ Domain Reload Profiling:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 09a8e2d (wow)
 =======
 >>>>>>> parent of 09a8e2d (wow)
 =======
@@ -238,6 +262,7 @@ System memory in use after: 127.3 MB.
 
 Unloading 17 unused Assets to reduce memory usage. Loaded Objects now: 3176.
 Total: 3.392100 ms (FindLiveObjects: 0.266000 ms CreateObjectMapping: 0.134200 ms MarkObjects: 2.916600 ms  DeleteObjects: 0.074400 ms)
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -388,6 +413,8 @@ Total: 3.945300 ms (FindLiveObjects: 0.324400 ms CreateObjectMapping: 0.152500 m
 >>>>>>> parent of 09a8e2d (wow)
 =======
 >>>>>>> parent of 09a8e2d (wow)
+=======
+>>>>>>> parent of 09a8e2d (wow)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
@@ -402,6 +429,7 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   Time since last request: 598.233732 seconds.
@@ -3443,6 +3471,45 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file
 >>>>>>> parent of 417f71f (still working with domain warp)
+=======
+  path: Assets/Source/Noise Data/Stone Noise Data.asset
+  artifactKey: Guid(e20822563f7735a4abceb972b7fca0d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Source/Noise Data/Stone Noise Data.asset using Guid(e20822563f7735a4abceb972b7fca0d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '353de9cbcff6cac8a38ce9a8b3f33c4d') in 8.840004 seconds 
+  Import took 8.882324 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000271 seconds.
+  path: Assets/Source/Noise Data/Domain Warping X Data.asset
+  artifactKey: Guid(13df41a402f22b94bb97dd566ab3cec4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Source/Noise Data/Domain Warping X Data.asset using Guid(13df41a402f22b94bb97dd566ab3cec4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '72273d37194cdd92be049b700ade7f9c') in 0.809242 seconds 
+  Import took 0.813409 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000299 seconds.
+  path: Assets/Source/Noise Data/Domain Warping Z Data.asset
+  artifactKey: Guid(6e3773713006fae428a6e0246bb42471) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Source/Noise Data/Domain Warping Z Data.asset using Guid(6e3773713006fae428a6e0246bb42471) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '759a6f6e7c16130a9021544683f81784') in 0.013388 seconds 
+  Import took 0.027105 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000111 seconds.
+  path: Assets/Source/Noise Data/Noise Data.asset
+  artifactKey: Guid(b352eed66884a0749a362e8e462c317b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Source/Noise Data/Noise Data.asset using Guid(b352eed66884a0749a362e8e462c317b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7569cc4c65d872ca5c390ae8443031bb') in 0.117457 seconds 
+  Import took 0.122831 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 19.496364 seconds.
+  path: Assets/Source/Block Data.asset
+  artifactKey: Guid(04e037efea9b0aa4e8ff26be0759cdd8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Source/Block Data.asset using Guid(04e037efea9b0aa4e8ff26be0759cdd8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '570d39de8fc1879295bb4c31f301cf45') in 0.005920 seconds 
+  Import took 0.010606 seconds .
+
+>>>>>>> parent of 09a8e2d (wow)
 =======
   path: Assets/Source/Noise Data/Stone Noise Data.asset
   artifactKey: Guid(e20822563f7735a4abceb972b7fca0d0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)

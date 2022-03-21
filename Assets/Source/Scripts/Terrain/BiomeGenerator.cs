@@ -8,6 +8,7 @@ public class BiomeGenerator : MonoBehaviour
     public NoiseData NoiseData;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     public LayerHandler InitialLayer;
     public List<LayerHandler> MiscHandlers;
 <<<<<<< HEAD:Assets/Source/Scripts/Terrain/BiomeGenerator.cs
@@ -17,11 +18,16 @@ public class BiomeGenerator : MonoBehaviour
 =======
 =======
 >>>>>>> parent of 09a8e2d (wow)
+=======
+>>>>>>> parent of 09a8e2d (wow)
     public DomainWarping DomainWarping;
     public LayerHandler InitialLayer;
     public List<LayerHandler> MiscHandlers;
     public bool UseDomainWarping;
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 09a8e2d (wow)
+=======
 >>>>>>> parent of 09a8e2d (wow)
 =======
 >>>>>>> parent of 09a8e2d (wow)
@@ -49,7 +55,10 @@ public class BiomeGenerator : MonoBehaviour
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD:Assets/Source/Scripts/Terrain/BiomeGenerator.cs
+=======
+>>>>>>> parent of 09a8e2d (wow)
 =======
 >>>>>>> parent of 09a8e2d (wow)
 =======
@@ -66,9 +75,12 @@ public class BiomeGenerator : MonoBehaviour
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         float height = NoiseGenerator.PerlinOctave(x, z, NoiseData);
 >>>>>>> parent of 417f71f (still working with domain warp):Assets/Source/Scripts/BiomeGenerator.cs
+=======
+>>>>>>> parent of 09a8e2d (wow)
 =======
 >>>>>>> parent of 09a8e2d (wow)
 =======
