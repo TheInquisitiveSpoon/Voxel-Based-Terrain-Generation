@@ -15,6 +15,7 @@ MonoBehaviour:
   Octaves: 3
   Magnitude: 0.008
   Seed: 397
+  Offset: {x: 40529, y: 391}
   Persistence: 0.45
   Modifier: 1.25
   PlateauExponent: 5

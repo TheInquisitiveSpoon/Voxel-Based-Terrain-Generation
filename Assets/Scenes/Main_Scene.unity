@@ -420,18 +420,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1078065571}
-        m_TargetAssemblyTypeName: CameraMovement, Assembly-CSharp
-        m_MethodName: ShowHideCursor
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &573111314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -941,7 +929,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 22.200012, y: -7.200012}
+  m_AnchoredPosition: {x: 22.199951, y: -7.200012}
   m_SizeDelta: {x: 40, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &999740655
@@ -1285,7 +1273,6 @@ MonoBehaviour:
   InitialLayer: {fileID: 29935811}
   MiscHandlers:
   - {fileID: 1111482111}
-  isDomainWarping: 0
 --- !u!4 &1184163400
 Transform:
   m_ObjectHideFlags: 0
@@ -1464,8 +1451,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -360.3, y: -184.7}
-  m_SizeDelta: {x: 160, y: 20}
+  m_AnchoredPosition: {x: -360.3, y: -176.6}
+  m_SizeDelta: {x: 157.9, y: 17.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1367039812
 MonoBehaviour:
@@ -1512,8 +1499,8 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1316774740}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
-  m_WholeNumbers: 0
+  m_MaxValue: 100000
+  m_WholeNumbers: 1
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1577,9 +1564,11 @@ MonoBehaviour:
   TerrainGenerator: {fileID: 871387059}
   SeedSlider: {fileID: 1367039812}
   WorldNoiseData: {fileID: 11400000, guid: b352eed66884a0749a362e8e462c317b, type: 2}
+  DomainWarpXNoise: {fileID: 11400000, guid: 8485abccc9a02c148aad068ebf03558a, type: 2}
+  DomainWarpZNoise: {fileID: 11400000, guid: a1d4fe3ecbb6c9b47b09a52624812793, type: 2}
   ChunkObject: {fileID: 6960135742322737557, guid: 3cb9458c73adf8c4fbd226f183e2e08c, type: 3}
-  Seed: 93923
-  NumChunks: 32
+  Seed: 100000
+  NumChunks: 16
   ChunkWidth: 16
   ChunkHeight: 100
   WaterLevel: 10

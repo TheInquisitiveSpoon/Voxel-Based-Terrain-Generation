@@ -8,7 +8,13 @@ public class NoiseData : ScriptableObject
     public int Octaves;
     public float Magnitude;
     public int Seed;
+    public Vector2Int Offset;
     public float Persistence;
     public float Modifier;
     public float PlateauExponent;
+
+    public void GetSeed(int seed)
+    {
+        Seed = seed;
+    }
 }

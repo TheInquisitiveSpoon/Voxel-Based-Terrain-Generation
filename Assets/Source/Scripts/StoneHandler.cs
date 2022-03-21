@@ -13,6 +13,7 @@ public class StoneHandler : LayerHandler
     {
         if (data.WorldPos.y > groundLevel) { return false; }
 
+        stoneNoiseData.GetSeed(World.WorldNoiseData.Seed);
         float stoneNoise = NoiseGenerator.PerlinOctave(data.WorldPos.x + pos.x, data.WorldPos.z + pos.z, stoneNoiseData);
 
         int endPosition = groundLevel;

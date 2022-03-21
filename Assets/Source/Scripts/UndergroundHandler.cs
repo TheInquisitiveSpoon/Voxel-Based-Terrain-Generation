@@ -9,12 +9,12 @@ public class UndergroundHandler : LayerHandler
 
     protected override bool AttemptHandle(ChunkData data, Vector3Int pos, int groundLevel)
     {
-        if (pos.y < groundLevel && pos.y > groundLevel - 5)
+        if (pos.y < groundLevel && pos.y > groundLevel - 4)
         {
             ChunkFunctions.SetVoxelType(data, pos, UndergroundVoxel);
             return true;
         }
-        else if (pos.y < groundLevel && pos.y < groundLevel - 5)
+        else if (pos.y < groundLevel && pos.y <= groundLevel - 4)
         {
             ChunkFunctions.SetVoxelType(data, pos, DeepUndergroundVoxel);
             return true;

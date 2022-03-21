@@ -1,6 +1,7 @@
 //  World.cs - Represents the game world, including world data and functions to generate and handle chunks and voxels.
 
 using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,9 +15,11 @@ public class World : MonoBehaviour
     public TerrainGenerator                 TerrainGenerator;
     public Slider                           SeedSlider;
     public NoiseData                        WorldNoiseData;
+    public NoiseData                        DomainWarpXNoise;
+    public NoiseData                        DomainWarpZNoise;
     public GameObject                       ChunkObject;
 
-    [Range(0, 500000)]
+    [Range(0, 100000)]
     public int                              Seed;
 
     [Range(8, 32)]
@@ -35,6 +38,7 @@ public class World : MonoBehaviour
     //  Generates world when script is loaded.
     public void Awake()
     {
+        SeedSlider.value = Seed;
         GenerateWorld();
         WorldData.ChunkDataToCreate = new List<Vector3Int>();
         WorldData.ChunksToCreate = new List<Vector3Int>();
@@ -43,9 +47,7 @@ public class World : MonoBehaviour
     //  Generates a number of chunks and renders each of the chunks on screen.
     public void GenerateWorld()
     {
-
         ChunkDataList.Clear();
-        //  Destroys existing chunk game objects
         foreach (ChunkRenderer chunk in Chunks.Values)
         {
             Destroy(chunk.gameObject);
@@ -54,21 +56,20 @@ public class World : MonoBehaviour
 
         ChangeWorldSeed();
 
-        //  Creates new chunks by generating the voxels within each chunk.
-        for (int x = 0; x < NumChunks; x++)
+        WorldData = GetWorldData(Vector3Int.RoundToInt(Player.transform.position));
+
+        foreach (Vector3Int chunkPos in WorldData.ChunkDataToCreate)
         {
-            for (int z = 0; z < NumChunks; z++)
-            {
-                //  Generate voxels for this chunk and add it to the list.
-                ChunkData data = new ChunkData(this, new Vector3Int(x * ChunkWidth, 0, z * ChunkWidth), ChunkWidth, ChunkHeight);
-                ChunkData terrain = TerrainGenerator.GenerateChunk(data);
-                ChunkDataList.Add(terrain.WorldPos, terrain);
-            }
+            ChunkData chunkData = new ChunkData(this, chunkPos, ChunkWidth, ChunkHeight);
+            ChunkData terrain = TerrainGenerator.GenerateChunk(chunkData);
+            ChunkDataList.Add(chunkPos, terrain);
         }
 
         //  Generates the chunk mesh and collider, as well as renders the new chunk.
-        foreach (ChunkData data in ChunkDataList.Values)
+        foreach (Vector3Int chunkPos in WorldData.ChunksToCreate)
         {
+            ChunkData data = ChunkDataList[chunkPos];
+
             //  Gets mesh data.
             MeshHandler meshData = ChunkFunctions.GetMeshData(data);
 
@@ -83,20 +84,102 @@ public class World : MonoBehaviour
             //  Adds chunk to the list.
             Chunks.Add(data.WorldPos, chunkRenderer);
         }
+    }
 
-        Vector3 pos = Player.transform.position;
-        pos = new Vector3
+    private WorldData GetWorldData(Vector3Int pos)
+    {
+        List<Vector3Int> DataInRange = GetDataInRange(pos);
+        List<Vector3Int> NewData = GetAllData(DataInRange, pos);
+
+        List<Vector3Int> ChunksInRange = GetChunksInRange(pos);
+        List<Vector3Int> NewChunks = GetAllRenderers(ChunksInRange, pos);
+
+        WorldData updatedData = new WorldData
         {
-            x = ((NumChunks / 2) * (ChunkWidth)),
-            y = 100.0f,
-            z = ((NumChunks / 2) * (ChunkWidth)),
+            ChunkDataToCreate = NewData,
+            ChunksToCreate = NewChunks,
+            ChunksToRemove = new List<Vector3Int>(),
+            ChunkDataToRemove = new List<Vector3Int>()
         };
-        Player.transform.SetPositionAndRotation(pos, Quaternion.identity);
+
+        return updatedData;
+    }
+
+    private List<Vector3Int> GetDataInRange(Vector3Int pos)
+    {
+        int startX = pos.x - (NumChunks + 1) * ChunkWidth;
+        int startZ = pos.z - (NumChunks + 1) * ChunkWidth;
+
+        int endX = pos.x + (NumChunks + 1) * ChunkWidth;
+        int endZ = pos.z + (NumChunks + 1) * ChunkWidth;
+
+        List<Vector3Int> chunkData = new List<Vector3Int>();
+
+        for (int x = startX; x <= endX; x += ChunkWidth)
+        {
+            for (int z = startZ; z <= endZ; z += ChunkWidth)
+            {
+                Vector3Int chunkPos = GetChunkPosFromVoxelPos(new Vector3Int(x, 0, z));
+                chunkData.Add(chunkPos);
+            }
+        }
+
+        return chunkData;
+    }
+
+    private List<Vector3Int> GetAllData(List<Vector3Int> dataInRange, Vector3Int pos)
+    {
+        return dataInRange
+            .Where(chunk => ChunkDataList.ContainsKey(chunk) == false)
+            .OrderBy(chunk => Vector3.Distance(pos, chunk))
+            .ToList();
+    }
+
+    private List<Vector3Int> GetChunksInRange(Vector3Int pos)
+    {
+        int startX = pos.x - NumChunks * ChunkWidth;
+        int startZ = pos.z - NumChunks * ChunkWidth;
+
+        int endX = pos.x + NumChunks * ChunkWidth;
+        int endZ = pos.z + NumChunks * ChunkWidth;
+
+        List<Vector3Int> chunks = new List<Vector3Int>();
+
+        for (int x = startX; x <= endX; x += ChunkWidth)
+        {
+            for (int z = startZ; z <= endZ; z += ChunkWidth)
+            {
+                Vector3Int chunkPos = GetChunkPosFromVoxelPos(new Vector3Int(x, 0, z));
+                chunks.Add(chunkPos);
+            }
+        }
+
+        return chunks;
+    }
+
+    private List<Vector3Int> GetAllRenderers(List<Vector3Int> chunksInRange, Vector3Int pos)
+    {
+        return chunksInRange
+            .Where(chunk => ChunkDataList.ContainsKey(chunk) == false)
+            .OrderBy(chunk => Vector3.Distance(pos, chunk))
+            .ToList();
     }
 
     public void ChangeWorldSeed()
     {
-        WorldNoiseData.Seed = Mathf.RoundToInt(SeedSlider.value);
+        WorldNoiseData.GetSeed(Mathf.RoundToInt(SeedSlider.value));
+        DomainWarpXNoise.GetSeed(WorldNoiseData.Seed);
+        DomainWarpZNoise.GetSeed(WorldNoiseData.Seed);
+    }
+
+    private Vector3Int GetChunkPosFromVoxelPos(Vector3Int pos)
+    {
+        return new Vector3Int
+        {
+            x = Mathf.FloorToInt(pos.x / (float)ChunkWidth) * ChunkWidth,
+            y = Mathf.FloorToInt(pos.y / (float)ChunkHeight) * ChunkHeight,
+            z = Mathf.FloorToInt(pos.z / (float)ChunkWidth) * ChunkWidth
+        };
     }
 
     //  Returns the voxel type of the voxel at the specified chunk position.
