@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //  CLASS:
-public class CameraMovement : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
     //  VARIABLES:
     public GameObject   Player;

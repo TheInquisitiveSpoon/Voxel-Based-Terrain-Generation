@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //  CLASS:
-public class PlayerMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     //  VARIABLES:
     public CharacterController  Controller;
-    public CameraMovement       CameraController;
+    public CameraController       CameraController;
     public World                CurrentWorld;
 
     public Vector3  Velocity;

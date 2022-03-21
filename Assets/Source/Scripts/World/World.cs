@@ -11,11 +11,13 @@ using UnityEngine.UI;
 public class World : MonoBehaviour
 {
     //  VARIABLES:
+    public GameController GameController;
     public GameObject                       Player;
     public TerrainGenerator                 TerrainGenerator;
     public Slider                           SeedSlider;
     public NoiseData                        WorldNoiseData;
     public NoiseData                        DomainWarpXNoise;
+
     public NoiseData                        DomainWarpZNoise;
     public GameObject                       ChunkObject;
 
@@ -47,16 +49,9 @@ public class World : MonoBehaviour
     //  Generates a number of chunks and renders each of the chunks on screen.
     public void GenerateWorld()
     {
-        ChunkDataList.Clear();
-        foreach (ChunkRenderer chunk in Chunks.Values)
-        {
-            Destroy(chunk.gameObject);
-        }
-        Chunks.Clear();
-
         ChangeWorldSeed();
 
-        WorldData = GetWorldData(Vector3Int.RoundToInt(Player.transform.position));
+        WorldData = GetWorldData(Vector3Int.FloorToInt(Player.transform.position));
 
         foreach (Vector3Int chunkPos in WorldData.ChunkDataToCreate)
         {
@@ -84,6 +79,12 @@ public class World : MonoBehaviour
             //  Adds chunk to the list.
             Chunks.Add(data.WorldPos, chunkRenderer);
         }
+    }
+    public void LoadNewChunks()
+    {
+        Debug.LogWarning("Loading more chunks.");
+        GenerateWorld();
+        GameController.CheckIfPlayerChunkChanged();
     }
 
     private WorldData GetWorldData(Vector3Int pos)
@@ -172,7 +173,7 @@ public class World : MonoBehaviour
         DomainWarpZNoise.GetSeed(WorldNoiseData.Seed);
     }
 
-    private Vector3Int GetChunkPosFromVoxelPos(Vector3Int pos)
+    public Vector3Int GetChunkPosFromVoxelPos(Vector3Int pos)
     {
         return new Vector3Int
         {
