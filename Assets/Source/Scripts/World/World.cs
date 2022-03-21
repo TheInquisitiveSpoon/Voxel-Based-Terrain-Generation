@@ -14,7 +14,7 @@ public class World : MonoBehaviour
     public GameObject                       Player;
     public TerrainGenerator                 TerrainGenerator;
     public Slider                           SeedSlider;
-    public NoiseData                        NoiseData;
+    public NoiseData                        WorldNoiseData;
     public GameObject                       ChunkObject;
 
     [Range(0, 500000)]
@@ -45,6 +45,7 @@ public class World : MonoBehaviour
     public void GenerateWorld()
     {
         ChunkDataList.Clear();
+        Chunks.Clear();
 
         ChangeWorldSeed();
 
@@ -56,7 +57,6 @@ public class World : MonoBehaviour
             ChunkData terrain = TerrainGenerator.GenerateChunk(data);
             ChunkDataList.Add(chunk, terrain);
         }
-
 
         //  Generates the chunk mesh and collider, as well as renders the new chunk.
         foreach (Vector3Int chunk in WorldData.ChunksToCreate)
@@ -160,7 +160,7 @@ public class World : MonoBehaviour
 
     public void ChangeWorldSeed()
     {
-        NoiseData.Seed = Mathf.RoundToInt(SeedSlider.value);
+        WorldNoiseData.Seed = Mathf.RoundToInt(SeedSlider.value);
     }
 
     private Vector3Int GetChunkPosFromVoxelPos(Vector3Int pos)

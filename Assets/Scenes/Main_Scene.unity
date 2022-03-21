@@ -185,10 +185,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 27046175}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75b1c41023616f6448eb49b52ee92a19, type: 3}
+  m_Script: {fileID: 11500000, guid: 620cff9a89236f846955f818f6875efa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextureData: {fileID: 11400000, guid: 04e037efea9b0aa4e8ff26be0759cdd8, type: 2}
+  TextureData: {fileID: 11400000, guid: 9aea0f5919e90204d956f963c0b46e45, type: 2}
 --- !u!4 &27046177
 Transform:
   m_ObjectHideFlags: 0
@@ -243,7 +243,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 29935809}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 755ab5179598f844fbfff33d8895eab8, type: 3}
+  m_Script: {fileID: 11500000, guid: 85a837c9fe6042e438d4574472b9c42f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 1912152098}
@@ -401,7 +401,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 338482716}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 159e0a650a0b88240b4fd718ecc7428d, type: 3}
+  m_Script: {fileID: 11500000, guid: 55c7b64b71f07ae4cbb130e45516f3e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   TextElement: {fileID: 1548091128}
@@ -446,7 +446,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 528736626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b94b23eee260c2f419821292066e9678, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c2573513a5ca714aae34b1897d1c51d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 0}
@@ -1020,7 +1020,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 867800664}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 561fe30cc6171d1459a37c33ec88d281, type: 3}
+  m_Script: {fileID: 11500000, guid: 106743551866a4e4b9c2722ae27495b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   FPSDisplay: {fileID: 867800666}
@@ -1054,7 +1054,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 871387058}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15caf38b1493dc24fbf31cc5c8af6e18, type: 3}
+  m_Script: {fileID: 11500000, guid: dd90a9496575dec4cb9dfa944e25b841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   BiomeGenerator: {fileID: 1184163399}
@@ -1183,7 +1183,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 893187025}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 204ebfb27e84c204685237c31ba10707, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ade3866f8d3ab645a8ed1054818d088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Controller: {fileID: 893187026}
@@ -1355,7 +1355,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1078065566}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 146984129440e77459e67fec31f92b11, type: 3}
+  m_Script: {fileID: 11500000, guid: eb410488e28db7249b8fdcb8fd5f8981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 893187025}
@@ -1532,15 +1532,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1111482110}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4dce6430e551d34aa101b0fbcd60eb3, type: 3}
+  m_Script: {fileID: 11500000, guid: e553a2c15d720c54f8efda5fba6669b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 0}
   World: {fileID: 1516733790}
-  stoneNoiseData: {fileID: 11400000, guid: e20822563f7735a4abceb972b7fca0d0, type: 2}
-  DomainWarping: {fileID: 1184163401}
-  stoneLimit: 0.6
-  StoneOffset: 36481
+  stoneNoiseData: {fileID: 11400000, guid: 0655207f085e211418b2ca9f6902b08c, type: 2}
+  DomainWarping: {fileID: 1111482113}
+  stoneLimit: 0.3
+  StoneOffset: 42560
 --- !u!4 &1111482112
 Transform:
   m_ObjectHideFlags: 0
@@ -1564,13 +1564,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1111482110}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b7c82176dde53446a3369d000b1251f, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ccd4d8351b247b448c2cc2a0b34bff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   XNoise: {fileID: 11400000, guid: 13df41a402f22b94bb97dd566ab3cec4, type: 2}
-  ZNoise: {fileID: 11400000, guid: 6e3773713006fae428a6e0246bb42471, type: 2}
+  ZNoise: {fileID: 11400000, guid: 3ec8b56af9d821b45a7f0d301c4e1e9d, type: 2}
   AmplitudeX: 50
-  AmplitudeZ: 120
+  AmplitudeZ: 70
 --- !u!1 &1184163398
 GameObject:
   m_ObjectHideFlags: 0
@@ -1598,15 +1598,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1184163398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b55fdfe1d4963c40a85b8898ca6e72f, type: 3}
+  m_Script: {fileID: 11500000, guid: 97dea05c17305914c803b25a22f941df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NoiseData: {fileID: 11400000, guid: b352eed66884a0749a362e8e462c317b, type: 2}
+  WorldNoise: {fileID: 11400000, guid: 0655207f085e211418b2ca9f6902b08c, type: 2}
   DomainWarping: {fileID: 1184163401}
   InitialLayer: {fileID: 29935811}
-  MiscHandlers:
-  - {fileID: 1111482111}
-  UseDomainWarping: 1
+  MiscHandlers: []
 --- !u!4 &1184163400
 Transform:
   m_ObjectHideFlags: 0
@@ -1635,13 +1633,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1184163398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b7c82176dde53446a3369d000b1251f, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ccd4d8351b247b448c2cc2a0b34bff2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   XNoise: {fileID: 11400000, guid: 13df41a402f22b94bb97dd566ab3cec4, type: 2}
-  ZNoise: {fileID: 11400000, guid: 6e3773713006fae428a6e0246bb42471, type: 2}
-  AmplitudeX: 80
-  AmplitudeZ: 80
+  ZNoise: {fileID: 11400000, guid: 3ec8b56af9d821b45a7f0d301c4e1e9d, type: 2}
+  AmplitudeX: 60
+  AmplitudeZ: 90
 --- !u!1 &1313141519
 GameObject:
   m_ObjectHideFlags: 0
@@ -1682,7 +1680,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1313141519}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ebb62932d0e27349a60f56199971f48, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b9ed9afe78fe2b4180507039e6a2bf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 528736628}
@@ -1714,16 +1712,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1516733789}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01907ffd8bb187b4abe689f6750665ef, type: 3}
+  m_Script: {fileID: 11500000, guid: c7d0e31f3fc77024cb4e7488aca88071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 893187025}
   TerrainGenerator: {fileID: 871387059}
   SeedSlider: {fileID: 338482719}
-  NoiseData: {fileID: 11400000, guid: b352eed66884a0749a362e8e462c317b, type: 2}
+  WorldNoiseData: {fileID: 11400000, guid: 0655207f085e211418b2ca9f6902b08c, type: 2}
   ChunkObject: {fileID: 6960135742322737557, guid: 3cb9458c73adf8c4fbd226f183e2e08c, type: 3}
   Seed: 0
-  NumChunks: 32
+  NumChunks: 16
   ChunkWidth: 16
   ChunkHeight: 100
   WaterLevel: 10
@@ -1936,7 +1934,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1912152096}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc99d9953fec7d04b81a25c4d227a7d3, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ac186f53b219ca4e991327d59405d9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Next: {fileID: 1313141521}
