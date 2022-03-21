@@ -12,42 +12,47 @@ public class World : MonoBehaviour
     //  VARIABLES:
     public GameObject                       Player;
     public TerrainGenerator                 TerrainGenerator;
-    public InputField                       SeedInputField;
-    public NoiseData                        NoiseData;
+    public Slider                           SeedSlider;
+    public NoiseData                        WorldNoiseData;
     public GameObject                       ChunkObject;
 
-    Dictionary<Vector3Int, ChunkRenderer>   Chunks          = new Dictionary<Vector3Int, ChunkRenderer>();
-    Dictionary<Vector3Int, ChunkData>       ChunkDataList   = new Dictionary<Vector3Int, ChunkData>();
+    [Range(0, 500000)]
+    public int                              Seed;
 
-    public string                           Seed;
     [Range(8, 32)]
     public int                              NumChunks       = 8;
+
     public int                              ChunkWidth      = 16;
     public int                              ChunkHeight     = 100;
     public int                              WaterLevel      = 10;
     public float                            Gravity         = -20.0f;
+
+    public WorldData WorldData = new WorldData();
+    Dictionary<Vector3Int, ChunkRenderer> Chunks = new Dictionary<Vector3Int, ChunkRenderer>();
+    Dictionary<Vector3Int, ChunkData> ChunkDataList = new Dictionary<Vector3Int, ChunkData>();
 
     //  FUNCTIONS:
     //  Generates world when script is loaded.
     public void Awake()
     {
         GenerateWorld();
+        WorldData.ChunkDataToCreate = new List<Vector3Int>();
+        WorldData.ChunksToCreate = new List<Vector3Int>();
     }
 
     //  Generates a number of chunks and renders each of the chunks on screen.
     public void GenerateWorld()
     {
-        ChunkDataList.Clear();
 
+        ChunkDataList.Clear();
         //  Destroys existing chunk game objects
         foreach (ChunkRenderer chunk in Chunks.Values)
         {
             Destroy(chunk.gameObject);
         }
-
         Chunks.Clear();
 
-        SetSeed();
+        ChangeWorldSeed();
 
         //  Creates new chunks by generating the voxels within each chunk.
         for (int x = 0; x < NumChunks; x++)
@@ -89,10 +94,9 @@ public class World : MonoBehaviour
         Player.transform.SetPositionAndRotation(pos, Quaternion.identity);
     }
 
-    public void SetSeed()
+    public void ChangeWorldSeed()
     {
-        Seed = SeedInputField.text;
-        NoiseData.Seed = Seed.GetHashCode();
+        WorldNoiseData.Seed = Mathf.RoundToInt(SeedSlider.value);
     }
 
     //  Returns the voxel type of the voxel at the specified chunk position.

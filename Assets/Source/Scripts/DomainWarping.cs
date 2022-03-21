@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class DomainWarping : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public NoiseData XNoise;
+    public NoiseData ZNoise;
+
+    public int AmplitudeX;
+    public int AmplitudeZ;
+
+    public float GenerateDomainWarp(int x, int z, NoiseData noiseData)
     {
-        
+        Vector2 warp = GetOffSet(x, z);
+        return NoiseGenerator.PerlinOctave(x + warp.x, z + warp.y, noiseData);
     }
 
-    // Update is called once per frame
-    void Update()
+    public Vector2 GetOffSet(int x, int z)
     {
-        
+        return new Vector2
+        {
+            x = NoiseGenerator.PerlinOctave(x, z, XNoise) * AmplitudeX,
+            y = NoiseGenerator.PerlinOctave(x, z, ZNoise) * AmplitudeZ
+        };
+    }
+
+    public Vector2Int GetIntOffset(int x, int z)
+    {
+        return Vector2Int.RoundToInt(GetOffSet(x, z));
     }
 }
