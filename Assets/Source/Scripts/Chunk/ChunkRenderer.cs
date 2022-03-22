@@ -15,7 +15,7 @@ using UnityEngine;
 public class ChunkRenderer : MonoBehaviour
 {
     //  VARIABLES:
-    ChunkData       ChunkData;
+    public ChunkData       ChunkData;
     MeshFilter      MeshFilter;
     MeshCollider    MeshCollider;
     Mesh            Mesh;

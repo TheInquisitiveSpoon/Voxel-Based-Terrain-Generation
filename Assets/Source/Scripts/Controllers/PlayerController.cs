@@ -1,5 +1,6 @@
 //  PlayerMovement.cs - Script for enabling Player to move, as well as performing gravity checks.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +10,9 @@ public class PlayerController : MonoBehaviour
 {
     //  VARIABLES:
     public CharacterController  Controller;
-    public CameraController       CameraController;
-    public World                CurrentWorld;
+    public CameraController     CameraController;
+    public World                World;
+    public LayerMask Ground;
 
     public Vector3  Velocity;
     public float    MoveSpeed   = 5.0f;
@@ -37,6 +39,11 @@ public class PlayerController : MonoBehaviour
                 SwapFlyEnabled();
             }
 
+            if (Input.GetButtonDown("Fire1"))
+            {
+                DestroyBlock();
+            }
+
             //  Get Player input from axis.
             float xDirection = Input.GetAxis("Horizontal");
             float zDirection = Input.GetAxis("Vertical");
@@ -46,7 +53,7 @@ public class PlayerController : MonoBehaviour
                 //  Add jump velocity to enable jumping if grounded.
                 if (Input.GetButtonDown("Jump") && Controller.isGrounded)
                 {
-                    Velocity.y = Mathf.Sqrt(JumpPower * -2.0f * CurrentWorld.Gravity);
+                    Velocity.y = Mathf.Sqrt(JumpPower * -2.0f * World.Gravity);
                 }
 
                 //  Move Player by movement input.
@@ -69,8 +76,19 @@ public class PlayerController : MonoBehaviour
         if (!IsFlyEnabled)
         {
             //  Move Player by current gravity velocity.
-            Velocity.y += CurrentWorld.Gravity * Time.deltaTime;
+            Velocity.y += World.Gravity * Time.deltaTime;
             Controller.Move(Velocity * Time.deltaTime);
+        }
+    }
+
+    private void DestroyBlock()
+    {
+        Ray raycast = new Ray(CameraController.transform.position, CameraController.transform.forward);
+        RaycastHit hitLoc;
+
+        if (Physics.Raycast(raycast, out hitLoc, 5.0f, Ground))
+        {
+            World.SetVoxel(hitLoc, VoxelType.Air);
         }
     }
 

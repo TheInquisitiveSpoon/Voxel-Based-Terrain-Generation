@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour
         if (Mathf.Abs(PlayerChunkCenter.x - Player.transform.position.x) > World.ChunkWidth ||
             Mathf.Abs(PlayerChunkCenter.z - Player.transform.position.z) > World.ChunkWidth)
         {
-            World.LoadNewChunks();
+            World.LoadNewChunks(PlayerChunkPos);
         }
         else
         {

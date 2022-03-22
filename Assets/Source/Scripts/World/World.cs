@@ -24,7 +24,7 @@ public class World : MonoBehaviour
     [Range(0, 100000)]
     public int                              Seed;
 
-    [Range(8, 32)]
+    [Range(0, 32)]
     public int                              NumChunks       = 8;
 
     public int                              ChunkWidth      = 16;
@@ -33,7 +33,7 @@ public class World : MonoBehaviour
     public float                            Gravity         = -20.0f;
 
     public WorldData WorldData = new WorldData();
-    Dictionary<Vector3Int, ChunkRenderer> Chunks = new Dictionary<Vector3Int, ChunkRenderer>();
+    Dictionary<Vector3Int, ChunkRenderer> ChunksList = new Dictionary<Vector3Int, ChunkRenderer>();
     Dictionary<Vector3Int, ChunkData> ChunkDataList = new Dictionary<Vector3Int, ChunkData>();
 
     //  FUNCTIONS:
@@ -41,9 +41,9 @@ public class World : MonoBehaviour
     public void Awake()
     {
         SeedSlider.value = Seed;
-        GenerateWorld();
         WorldData.ChunkDataToCreate = new List<Vector3Int>();
         WorldData.ChunksToCreate = new List<Vector3Int>();
+        GenerateWorld();
     }
 
     //  Generates a number of chunks and renders each of the chunks on screen.
@@ -51,7 +51,14 @@ public class World : MonoBehaviour
     {
         ChangeWorldSeed();
 
-        WorldData = GetWorldData(Vector3Int.FloorToInt(Player.transform.position));
+        ChunkDataList.Clear();
+        foreach (var chunk in ChunksList)
+        {
+            Destroy(chunk.Value.gameObject);
+        }
+        ChunksList.Clear();
+
+        WorldData = GetWorldData(Vector3Int.zero);
 
         foreach (Vector3Int chunkPos in WorldData.ChunkDataToCreate)
         {
@@ -77,13 +84,51 @@ public class World : MonoBehaviour
             chunkRenderer.UpdateChunk(meshData);
 
             //  Adds chunk to the list.
-            Chunks.Add(data.WorldPos, chunkRenderer);
+            ChunksList.Add(data.WorldPos, chunkRenderer);
         }
     }
-    public void LoadNewChunks()
+
+    internal bool SetVoxel(RaycastHit hitLoc, VoxelType air)
     {
-        Debug.LogWarning("Loading more chunks.");
-        GenerateWorld();
+        ChunkRenderer chunk = hitLoc.collider.GetComponent<ChunkRenderer>();
+
+        if (chunk)
+        {
+            Vector3Int voxelPos = GetVoxelPos(hitLoc);
+            SetVoxel(chunk, voxelPos, air);
+        }
+
+        return false;
+    }
+
+    private void SetVoxel(ChunkRenderer chunk, Vector3Int voxelPos, VoxelType air)
+    {
+        ChunkFunctions.SetVoxelType(chunk.ChunkData, voxelPos, air);
+        MeshHandler meshData = ChunkFunctions.GetMeshData(chunk.ChunkData);
+        chunk.UpdateChunk(meshData);
+    }
+
+    private Vector3Int GetVoxelPos(RaycastHit hitLoc)
+    {
+        return Vector3Int.RoundToInt(new Vector3
+        {
+            x = GetVoxelCenter(hitLoc.point.x, hitLoc.normal.x),
+            y = GetVoxelCenter(hitLoc.point.y, hitLoc.normal.y),
+            z = GetVoxelCenter(hitLoc.point.z, hitLoc.normal.z)
+        });
+    }
+
+    private float GetVoxelCenter(float pos, float normal)
+    {
+        if (Mathf.Abs(pos % 1.0f) == 0.5f) { pos -= (normal / 2); }
+
+        return pos;
+    }
+
+    public void LoadNewChunks(Vector3Int playerChunk)
+    {
+        //Debug.LogWarning("Loading more chunks.");
+        //UpdateWorld(playerChunk);
         GameController.CheckIfPlayerChunkChanged();
     }
 
@@ -132,7 +177,6 @@ public class World : MonoBehaviour
     {
         return dataInRange
             .Where(chunk => ChunkDataList.ContainsKey(chunk) == false)
-            .OrderBy(chunk => Vector3.Distance(pos, chunk))
             .ToList();
     }
 
@@ -162,7 +206,6 @@ public class World : MonoBehaviour
     {
         return chunksInRange
             .Where(chunk => ChunkDataList.ContainsKey(chunk) == false)
-            .OrderBy(chunk => Vector3.Distance(pos, chunk))
             .ToList();
     }
 

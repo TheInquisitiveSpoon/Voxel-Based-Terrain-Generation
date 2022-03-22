@@ -48,6 +48,7 @@ public static class ChunkFunctions
     //  Changes the voxel type of a specific voxel in the chunk.
     public static void SetVoxelType(ChunkData chunkData, Vector3Int pos, VoxelType newVoxelType)
     {
+        Debug.LogWarning(IsVoxelInChunk(chunkData, pos.x, pos.y, pos.z));
         if (IsVoxelInChunk(chunkData, pos.x, pos.y, pos.z))
         {
             int index = GetIndexFromPos(chunkData, pos.x, pos.y, pos.z);
