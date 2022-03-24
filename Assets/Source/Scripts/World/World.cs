@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class World : MonoBehaviour
 {
     //  VARIABLES:
-    public GameController GameController;
+    public GameController                   GameController;
     public GameObject                       Player;
     public TerrainGenerator                 TerrainGenerator;
     public Slider                           SeedSlider;
@@ -25,7 +25,7 @@ public class World : MonoBehaviour
     public int                              Seed;
 
     [Range(4, 32)]
-    public int                              ChunkRenderDist       = 8;
+    public int                              ChunkRenderDist = 8;
 
     public int                              ChunkWidth      = 16;
     public int                              ChunkHeight     = 100;
