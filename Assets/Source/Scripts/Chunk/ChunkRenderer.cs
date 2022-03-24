@@ -20,7 +20,7 @@ public class ChunkRenderer : MonoBehaviour
     MeshCollider    MeshCollider;
     Mesh            Mesh;
 
-    bool            showGizmo   = false;
+    bool            showGizmo   = true;
 
     //  FUNCTIONS:
     //  Sets component references and mesh when script is loaded.
@@ -80,12 +80,22 @@ public class ChunkRenderer : MonoBehaviour
             if (Application.isPlaying && ChunkData != null)
             {
                 //  Changes draw colour if object is selected.
-                if (Selection.activeObject == gameObject) { Gizmos.color = new Color(0.0f, 1.0f, 0.0f, 0.2f); }
-                else { Gizmos.color = new Color(0.0f, 0.0f, 1.0f, 0.4f); }
+                if (Selection.activeObject == gameObject)
+                {
+                    Gizmos.color = new Color(0.0f, 1.0f, 0.0f, 0.2f);
 
-                //  Draws gizmo.
-                Gizmos.DrawCube(transform.position + new Vector3(ChunkData.Width / 2.0f, ChunkData.Height / 2.0f, ChunkData.Width / 2.0f),
-                    new Vector3(ChunkData.Width, ChunkData.Height, ChunkData.Width));
+                    //  Draws gizmo.
+                    Gizmos.DrawCube(transform.position + new Vector3(ChunkData.Width / 2.0f, 0.0f, ChunkData.Width / 2.0f),
+                        new Vector3(ChunkData.Width, ChunkData.Height, ChunkData.Width));
+                }
+                else
+                {
+                    Gizmos.color = new Color(1.0f, 0.0f, 1.0f, 0.4f);
+
+                    //  Draws gizmo.
+                    Gizmos.DrawWireCube(transform.position + new Vector3(ChunkData.Width / 2.0f, 0.0f, ChunkData.Width / 2.0f),
+                        new Vector3(ChunkData.Width, ChunkData.Height, ChunkData.Width));
+                }
             }
         }
     }

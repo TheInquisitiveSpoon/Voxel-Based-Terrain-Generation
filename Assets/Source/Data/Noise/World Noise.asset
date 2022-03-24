@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Octaves: 8
   Magnitude: 0.007
-  Seed: 0
+  Seed: 1203
   Offset: {x: 10000, y: 4206}
   Persistence: 0.45
   Modifier: 1.25

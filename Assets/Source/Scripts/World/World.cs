@@ -24,17 +24,17 @@ public class World : MonoBehaviour
     [Range(0, 100000)]
     public int                              Seed;
 
-    [Range(8, 32)]
-    public int                              NumChunks       = 8;
+    [Range(4, 32)]
+    public int                              ChunkRenderDist       = 8;
 
     public int                              ChunkWidth      = 16;
     public int                              ChunkHeight     = 100;
     public int                              WaterLevel      = 10;
     public float                            Gravity         = -20.0f;
 
-    public WorldData WorldData = new WorldData();
-    Dictionary<Vector3Int, ChunkRenderer> Chunks = new Dictionary<Vector3Int, ChunkRenderer>();
-    Dictionary<Vector3Int, ChunkData> ChunkDataList = new Dictionary<Vector3Int, ChunkData>();
+    public WorldData WorldData;
+    public Dictionary<Vector3Int, ChunkData> ChunkDataList = new Dictionary<Vector3Int, ChunkData>();
+    public Dictionary<Vector3Int, ChunkRenderer> Chunks = new Dictionary<Vector3Int, ChunkRenderer>();
 
     //  FUNCTIONS:
     //  Generates world when script is loaded.
@@ -42,8 +42,6 @@ public class World : MonoBehaviour
     {
         SeedSlider.value = Seed;
         GenerateWorld();
-        WorldData.ChunkDataToCreate = new List<Vector3Int>();
-        WorldData.ChunksToCreate = new List<Vector3Int>();
     }
 
     //  Generates a number of chunks and renders each of the chunks on screen.
@@ -51,7 +49,7 @@ public class World : MonoBehaviour
     {
         ChangeWorldSeed();
 
-        WorldData = GetWorldData(Vector3Int.FloorToInt(Player.transform.position));
+        WorldData = GetWorldData(Vector3Int.FloorToInt(Vector3Int.RoundToInt(Player.transform.position)));
 
         foreach (Vector3Int chunkPos in WorldData.ChunkDataToCreate)
         {
@@ -80,9 +78,9 @@ public class World : MonoBehaviour
             Chunks.Add(data.WorldPos, chunkRenderer);
         }
     }
+
     public void LoadNewChunks()
     {
-        Debug.LogWarning("Loading more chunks.");
         GenerateWorld();
         GameController.CheckIfPlayerChunkChanged();
     }
@@ -90,29 +88,29 @@ public class World : MonoBehaviour
     private WorldData GetWorldData(Vector3Int pos)
     {
         List<Vector3Int> DataInRange = GetDataInRange(pos);
-        List<Vector3Int> NewData = GetAllData(DataInRange, pos);
-
         List<Vector3Int> ChunksInRange = GetChunksInRange(pos);
+
+        List<Vector3Int> NewData = GetAllData(DataInRange, pos);
         List<Vector3Int> NewChunks = GetAllRenderers(ChunksInRange, pos);
 
-        WorldData updatedData = new WorldData
+        WorldData data = new WorldData
         {
             ChunkDataToCreate = NewData,
+            ChunkDataToRemove = new List<Vector3Int>(),
             ChunksToCreate = NewChunks,
-            ChunksToRemove = new List<Vector3Int>(),
-            ChunkDataToRemove = new List<Vector3Int>()
+            ChunksToRemove = new List<Vector3Int>()
         };
 
-        return updatedData;
+        return data;
     }
 
     private List<Vector3Int> GetDataInRange(Vector3Int pos)
     {
-        int startX = pos.x - (NumChunks + 1) * ChunkWidth;
-        int startZ = pos.z - (NumChunks + 1) * ChunkWidth;
+        int startX = pos.x - (ChunkRenderDist + 1) * ChunkWidth;
+        int startZ = pos.z - (ChunkRenderDist + 1) * ChunkWidth;
 
-        int endX = pos.x + (NumChunks + 1) * ChunkWidth;
-        int endZ = pos.z + (NumChunks + 1) * ChunkWidth;
+        int endX = pos.x + (ChunkRenderDist + 1) * ChunkWidth;
+        int endZ = pos.z + (ChunkRenderDist + 1) * ChunkWidth;
 
         List<Vector3Int> chunkData = new List<Vector3Int>();
 
@@ -138,11 +136,11 @@ public class World : MonoBehaviour
 
     private List<Vector3Int> GetChunksInRange(Vector3Int pos)
     {
-        int startX = pos.x - NumChunks * ChunkWidth;
-        int startZ = pos.z - NumChunks * ChunkWidth;
+        int startX = pos.x - ChunkRenderDist * ChunkWidth;
+        int startZ = pos.z - ChunkRenderDist * ChunkWidth;
 
-        int endX = pos.x + NumChunks * ChunkWidth;
-        int endZ = pos.z + NumChunks * ChunkWidth;
+        int endX = pos.x + ChunkRenderDist * ChunkWidth;
+        int endZ = pos.z + ChunkRenderDist * ChunkWidth;
 
         List<Vector3Int> chunks = new List<Vector3Int>();
 
@@ -161,7 +159,7 @@ public class World : MonoBehaviour
     private List<Vector3Int> GetAllRenderers(List<Vector3Int> chunksInRange, Vector3Int pos)
     {
         return chunksInRange
-            .Where(chunk => ChunkDataList.ContainsKey(chunk) == false)
+            .Where(chunk => Chunks.ContainsKey(chunk) == false)
             .OrderBy(chunk => Vector3.Distance(pos, chunk))
             .ToList();
     }
