@@ -40,6 +40,8 @@ public class World : MonoBehaviour
     //  Generates world when script is loaded.
     public void Awake()
     {
+        WorldData.ChunkDataToRemove = new List<Vector3Int>();
+        WorldData.ChunksToRemove = new List<Vector3Int>();
         SeedSlider.value = Seed;
         GenerateWorld();
     }
@@ -47,6 +49,17 @@ public class World : MonoBehaviour
     //  Generates a number of chunks and renders each of the chunks on screen.
     public void GenerateWorld()
     {
+        foreach (Vector3Int data in WorldData.ChunkDataToRemove)
+        {
+            ChunkDataList.Remove(data);
+        }
+
+        foreach (Vector3Int chunk in WorldData.ChunksToRemove)
+        {
+            Destroy(Chunks[chunk].gameObject);
+            Chunks.Remove(chunk);
+        }
+
         ChangeWorldSeed();
 
         WorldData = GetWorldData(Vector3Int.FloorToInt(Vector3Int.RoundToInt(Player.transform.position)));
@@ -93,12 +106,15 @@ public class World : MonoBehaviour
         List<Vector3Int> NewData = GetAllData(DataInRange, pos);
         List<Vector3Int> NewChunks = GetAllRenderers(ChunksInRange, pos);
 
+        List<Vector3Int> DataToRemove = GetDataOutOfRange(DataInRange, pos);
+        List<Vector3Int> ChunksToRemove = GetChunksOutOfRange(ChunksInRange, pos);
+
         WorldData data = new WorldData
         {
             ChunkDataToCreate = NewData,
-            ChunkDataToRemove = new List<Vector3Int>(),
+            ChunkDataToRemove = DataToRemove,
             ChunksToCreate = NewChunks,
-            ChunksToRemove = new List<Vector3Int>()
+            ChunksToRemove = ChunksToRemove
         };
 
         return data;
@@ -134,6 +150,13 @@ public class World : MonoBehaviour
             .ToList();
     }
 
+    private List<Vector3Int> GetDataOutOfRange(List<Vector3Int> dataInRange, Vector3Int pos)
+    {
+        return ChunkDataList.Keys
+            .Where(data => dataInRange.Contains(data) == false)
+            .ToList();
+    }
+
     private List<Vector3Int> GetChunksInRange(Vector3Int pos)
     {
         int startX = pos.x - ChunkRenderDist * ChunkWidth;
@@ -162,6 +185,22 @@ public class World : MonoBehaviour
             .Where(chunk => Chunks.ContainsKey(chunk) == false)
             .OrderBy(chunk => Vector3.Distance(pos, chunk))
             .ToList();
+    }
+
+    private List<Vector3Int> GetChunksOutOfRange(List<Vector3Int> chunksInRange, Vector3Int pos)
+    {
+        List<Vector3Int> chunksToRemove = new List<Vector3Int>();
+
+        foreach(Vector3Int chunk in Chunks.Keys
+            .Where(renderer => chunksInRange.Contains(renderer) == false))
+        {
+            if (Chunks.ContainsKey(chunk))
+            {
+                chunksToRemove.Add(chunk);
+            }
+        }
+
+        return chunksToRemove;
     }
 
     public void ChangeWorldSeed()
