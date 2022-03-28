@@ -6,13 +6,10 @@ using UnityEngine;
 public class TerrainGenerator : MonoBehaviour
 {
     public BiomeGenerator BiomeGenerator;
-    public TreeGenerator TreeGenerator;
 
     public ChunkData GenerateChunk(ChunkData data)
     {
-        TreeData treeData = BiomeGenerator.GenerateTreeData(data);
-
-        data.TreeData = treeData;
+        data.TreeData = new TreeData();
 
         for (int x = 0; x < data.Width; x++)
         {

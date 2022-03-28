@@ -14,11 +14,8 @@ public class World : MonoBehaviour
     public GameController                   GameController;
     public GameObject                       Player;
     public TerrainGenerator                 TerrainGenerator;
+    public List<NoiseData> AllNoiseData;
     public Slider                           SeedSlider;
-    public NoiseData                        WorldNoiseData;
-    public NoiseData stoneNoise;
-    public NoiseData                        DomainWarpXNoise;
-    public NoiseData                        DomainWarpZNoise;
     public GameObject                       ChunkObject;
 
     [Range(0, 100000)]
@@ -71,6 +68,11 @@ public class World : MonoBehaviour
             ChunkDataList.Add(chunkPos, terrain);
         }
 
+        foreach (ChunkData chunkPos in ChunkDataList.Values)
+        {
+            GenerateLeaves(chunkPos);
+        }
+
         //  Generates the chunk mesh and collider, as well as renders the new chunk.
         foreach (Vector3Int chunkPos in WorldData.ChunksToCreate)
         {
@@ -89,6 +91,36 @@ public class World : MonoBehaviour
 
             //  Adds chunk to the list.
             Chunks.Add(data.WorldPos, chunkRenderer);
+        }
+    }
+
+    internal void SetVoxelType(Vector3Int pos, VoxelType newVoxelType)
+    {
+        ChunkData chunkData = GetChunkData(pos);
+
+        if (chunkData != null)
+        {
+            Vector3Int voxelPos = ChunkFunctions.GetVoxelChunkPos(chunkData, pos);
+            ChunkFunctions.SetVoxelType(chunkData, voxelPos, newVoxelType);
+        }
+    }
+
+    private ChunkData GetChunkData(Vector3Int pos)
+    {
+        Vector3Int chunkPos = ChunkFunctions.GetChunkPosFromVoxel(this, pos.x, pos.y, pos.z);
+
+        ChunkData chunkData = null;
+
+        ChunkDataList.TryGetValue(chunkPos, out chunkData);
+
+        return chunkData;
+    }
+
+    private void GenerateLeaves(ChunkData chunk)
+    {
+        foreach(Vector3Int leaf in chunk.TreeData.Leaves)
+        {
+            ChunkFunctions.SetVoxelType(chunk, leaf, VoxelType.Leaves);
         }
     }
 
@@ -205,10 +237,10 @@ public class World : MonoBehaviour
 
     public void ChangeWorldSeed()
     {
-        WorldNoiseData.GetSeed(Mathf.RoundToInt(SeedSlider.value));
-        stoneNoise.GetSeed(WorldNoiseData.Seed);
-        DomainWarpXNoise.GetSeed(WorldNoiseData.Seed);
-        DomainWarpZNoise.GetSeed(WorldNoiseData.Seed);
+        foreach (NoiseData noiseData in AllNoiseData)
+        {
+            noiseData.GetSeed(Mathf.RoundToInt(SeedSlider.value));
+        }
     }
 
     public Vector3Int GetChunkPosFromVoxelPos(Vector3Int pos)
@@ -235,4 +267,24 @@ public class World : MonoBehaviour
         Vector3Int chunkPos = ChunkFunctions.GetVoxelChunkPos(tempChunk, new Vector3Int(x, y, z));
         return ChunkFunctions.GetVoxelTypeFromPos(tempChunk, chunkPos.x, chunkPos.y, chunkPos.z);
     }
+
+    //  Only enabled if using unity editor.
+#if UNITY_EDITOR
+    //  Draws outlines of selected chunks in the scene window if gizmos are enabled.
+    private void OnDrawGizmos()
+    {
+        //  Ensure application is running and that there is chunk data before eneabling selection.
+        if (Application.isPlaying && Player != null)
+        {
+            Gizmos.color = Color.green;
+            Vector3 cubeCenter = GameController.PlayerChunkCenter;
+            float cubeSize = 2.0f * ((ChunkWidth) * (ChunkRenderDist)) + ChunkWidth;
+            Gizmos.DrawWireCube(cubeCenter, new Vector3(cubeSize, 1.0f, cubeSize));
+
+            Gizmos.color = Color.blue;
+            cubeSize += ChunkWidth * 2.0f;
+            Gizmos.DrawWireCube(cubeCenter, new Vector3(cubeSize, 1.0f, cubeSize));
+        }
+    }
+#endif
 }

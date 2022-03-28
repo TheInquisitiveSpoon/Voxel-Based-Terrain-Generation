@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c656d9e89944342bbda066401e104b, type: 3}
   m_Name: Plains Tree Data
   m_EditorClassIdentifier: 
-  Octaves: 4
-  Magnitude: 0.01
+  Octaves: 3
+  Magnitude: 0.2
   Seed: 1203
   Offset: {x: 6859, y: 555}
-  Persistence: 0.5
-  Modifier: 1.3
-  PlateauExponent: 5
+  Persistence: 0.01
+  Modifier: 1.5
+  PlateauExponent: 0

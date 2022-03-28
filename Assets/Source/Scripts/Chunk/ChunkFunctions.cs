@@ -53,6 +53,10 @@ public static class ChunkFunctions
             int index = GetIndexFromPos(chunkData, pos.x, pos.y, pos.z);
             chunkData.Voxels[index] = newVoxelType;
         }
+        else
+        {
+            chunkData.World.SetVoxelType(pos + chunkData.WorldPos, newVoxelType);
+        }
     }
 
     //  Gets the index in the chunk of the specified voxel coordinates.

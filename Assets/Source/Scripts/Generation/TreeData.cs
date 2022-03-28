@@ -5,6 +5,6 @@ using UnityEngine;
 
 public class TreeData
 {
-    public List<Vector2Int> Trees = new List<Vector2Int>();
+    public List<Vector3Int> Trees = new List<Vector3Int>();
     public List<Vector3Int> Leaves = new List<Vector3Int>();
 }

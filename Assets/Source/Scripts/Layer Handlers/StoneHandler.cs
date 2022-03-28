@@ -11,8 +11,6 @@ public class StoneHandler : LayerHandler
 
     protected override bool AttemptHandle(ChunkData data, Vector3Int pos, int groundLevel)
     {
-        if (data.WorldPos.y > groundLevel) { return false; }
-
         float stoneNoise = NoiseGenerator.PerlinOctave(data.WorldPos.x + pos.x, data.WorldPos.z + pos.z, stoneNoiseData);
 
         int endPosition = groundLevel;
