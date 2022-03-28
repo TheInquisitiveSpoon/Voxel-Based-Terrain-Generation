@@ -11,6 +11,7 @@ public class ChunkData
     public World        World;
     public Vector3Int   WorldPos;
     public VoxelType[]  Voxels;
+    public TreeData TreeData;
 
     public int          Width       = 16;
     public int          Height      = 100;

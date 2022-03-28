@@ -196,7 +196,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1184163400}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &29935811
 MonoBehaviour:
@@ -276,9 +276,104 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1111482112}
+  - {fileID: 452903061}
   m_Father: {fileID: 1184163400}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &452903060
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 452903061}
+  - component: {fileID: 452903062}
+  m_Layer: 0
+  m_Name: Tree Handler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &452903061
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452903060}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 146522556}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &452903062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452903060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd40af4f6c6a19408e469199fafe45a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Next: {fileID: 0}
+  TreeNoiseData: {fileID: 11400000, guid: b352eed66884a0749a362e8e462c317b, type: 2}
+  TreeHeightLimit: 25
+  TreeTrunkHeightMin: 4
+  TreeTrunkHeightMax: 8
+  CurrentTreeHeight: 5
+--- !u!1 &485780970
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 485780971}
+  - component: {fileID: 485780972}
+  m_Layer: 0
+  m_Name: Tree Generator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &485780971
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 485780970}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1184163400}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &485780972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 485780970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e371127d51a5494a9f2613155c88bb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TreeNoiseData: {fileID: 11400000, guid: e66298c874cdd664894970a83526373a, type: 2}
+  DomainWarping: {fileID: 2103139519}
 --- !u!1 &528736626
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,7 +403,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1184163400}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &528736628
 MonoBehaviour:
@@ -759,6 +854,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BiomeGenerator: {fileID: 1184163399}
+  TreeGenerator: {fileID: 0}
 --- !u!4 &871387060
 Transform:
   m_ObjectHideFlags: 0
@@ -1273,6 +1369,8 @@ MonoBehaviour:
   InitialLayer: {fileID: 29935811}
   MiscHandlers:
   - {fileID: 1111482111}
+  - {fileID: 452903062}
+  TreeGenerator: {fileID: 485780972}
 --- !u!4 &1184163400
 Transform:
   m_ObjectHideFlags: 0
@@ -1284,6 +1382,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 485780971}
   - {fileID: 2103139520}
   - {fileID: 29935810}
   - {fileID: 1912152097}
@@ -1322,7 +1421,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1184163400}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1313141521
 MonoBehaviour:
@@ -1565,6 +1664,7 @@ MonoBehaviour:
   TerrainGenerator: {fileID: 871387059}
   SeedSlider: {fileID: 1367039812}
   WorldNoiseData: {fileID: 11400000, guid: b352eed66884a0749a362e8e462c317b, type: 2}
+  stoneNoise: {fileID: 11400000, guid: e20822563f7735a4abceb972b7fca0d0, type: 2}
   DomainWarpXNoise: {fileID: 11400000, guid: 8485abccc9a02c148aad068ebf03558a, type: 2}
   DomainWarpZNoise: {fileID: 11400000, guid: a1d4fe3ecbb6c9b47b09a52624812793, type: 2}
   ChunkObject: {fileID: 6960135742322737557, guid: 3cb9458c73adf8c4fbd226f183e2e08c, type: 3}
@@ -1776,7 +1876,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1184163400}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1912152098
 MonoBehaviour:
@@ -2069,5 +2169,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1184163400}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -66,7 +66,7 @@ MonoBehaviour:
   - VoxelType: 9
     TopTexture: {x: 0, y: 0}
     BottomTexture: {x: 0, y: 0}
-    SideTexture: {x: 9, y: 1}
+    SideTexture: {x: 1, y: 9}
     IsSolid: 1
     GeneratesCollider: 1
   - VoxelType: 10

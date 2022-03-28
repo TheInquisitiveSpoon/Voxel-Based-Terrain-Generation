@@ -16,8 +16,8 @@ public class World : MonoBehaviour
     public TerrainGenerator                 TerrainGenerator;
     public Slider                           SeedSlider;
     public NoiseData                        WorldNoiseData;
+    public NoiseData stoneNoise;
     public NoiseData                        DomainWarpXNoise;
-
     public NoiseData                        DomainWarpZNoise;
     public GameObject                       ChunkObject;
 
@@ -206,6 +206,7 @@ public class World : MonoBehaviour
     public void ChangeWorldSeed()
     {
         WorldNoiseData.GetSeed(Mathf.RoundToInt(SeedSlider.value));
+        stoneNoise.GetSeed(WorldNoiseData.Seed);
         DomainWarpXNoise.GetSeed(WorldNoiseData.Seed);
         DomainWarpZNoise.GetSeed(WorldNoiseData.Seed);
     }

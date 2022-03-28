@@ -9,6 +9,7 @@ public class BiomeGenerator : MonoBehaviour
     public DomainWarping DomainWarping;
     public LayerHandler InitialLayer;
     public List<LayerHandler> MiscHandlers;
+    public TreeGenerator TreeGenerator;
 
     public  ChunkData GetChunkData(ChunkData data, int x, int z)
     {
@@ -32,6 +33,13 @@ public class BiomeGenerator : MonoBehaviour
         }
 
         return data;
+    }
+
+    public TreeData GenerateTreeData(ChunkData data)
+    {
+        if (TreeGenerator == null) { return new TreeData(); }
+
+        return TreeGenerator.GenerateTrees(data);
     }
 
     private int GetSurfaceHeight(int x, int z, int chunkHeight)
