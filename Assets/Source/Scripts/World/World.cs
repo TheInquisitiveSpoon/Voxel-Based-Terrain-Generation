@@ -11,27 +11,27 @@ using UnityEngine.UI;
 public class World : MonoBehaviour
 {
     //  VARIABLES:
-    public GameController                   GameController;
-    public GameObject                       Player;
-    public TerrainGenerator                 TerrainGenerator;
-    public List<NoiseData> AllNoiseData;
-    public Slider                           SeedSlider;
-    public GameObject                       ChunkObject;
+    public GameController       GameController;
+    public GameObject           Player;
+    public TerrainGenerator     TerrainGenerator;
+    public List<NoiseData>      AllNoiseData;
+    public Slider               SeedSlider;
+    public GameObject           ChunkObject;
+    public WorldData            WorldData;
 
     [Range(0, 100000)]
-    public int                              Seed;
+    public int                  Seed;
 
     [Range(4, 32)]
-    public int                              ChunkRenderDist = 8;
+    public int                  ChunkRenderDist = 8;
 
-    public int                              ChunkWidth      = 16;
-    public int                              ChunkHeight     = 100;
-    public int                              WaterLevel      = 10;
-    public float                            Gravity         = -20.0f;
+    public int                  ChunkWidth      = 16;
+    public int                  ChunkHeight     = 100;
+    public int                  WaterLevel      = 10;
+    public float                Gravity         = -20.0f;
 
-    public WorldData WorldData;
-    public Dictionary<Vector3Int, ChunkData> ChunkDataList = new Dictionary<Vector3Int, ChunkData>();
-    public Dictionary<Vector3Int, ChunkRenderer> Chunks = new Dictionary<Vector3Int, ChunkRenderer>();
+    public Dictionary<Vector3Int, ChunkData>        ChunkDataList   = new Dictionary<Vector3Int, ChunkData>();
+    public Dictionary<Vector3Int, ChunkRenderer>    Chunks          = new Dictionary<Vector3Int, ChunkRenderer>();
 
     //  FUNCTIONS:
     //  Generates world when script is loaded.
@@ -46,6 +46,8 @@ public class World : MonoBehaviour
     //  Generates a number of chunks and renders each of the chunks on screen.
     public void GenerateWorld()
     {
+        TerrainGenerator.GetBiomeCenters(Player.transform.position, ChunkRenderDist, ChunkWidth);
+
         foreach (Vector3Int data in WorldData.ChunkDataToRemove)
         {
             ChunkDataList.Remove(data);

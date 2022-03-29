@@ -10,10 +10,19 @@ public class BiomeGenerator : MonoBehaviour
     public LayerHandler InitialLayer;
     public List<LayerHandler> MiscHandlers;
 
-    public  ChunkData GetChunkData(ChunkData data, int x, int z)
+    public  ChunkData GetChunkData(ChunkData data, int x, int z, int? biomeGroundLevel)
     {
         //  Determines the ground level of the noise.
-        int groundLevel = GetSurfaceHeight(data.WorldPos.x + x, data.WorldPos.z + z, data.Height);
+        int groundLevel;
+
+        if (biomeGroundLevel.HasValue == false)
+        {
+            groundLevel = GetSurfaceHeight(data.WorldPos.x + x, data.WorldPos.z + z, data.Height);
+        }
+        else
+        {
+            groundLevel = biomeGroundLevel.Value;
+        }
 
         //  Alters voxel type base on current height within the chunk.
         for (int y = 0; y < data.Height; y++)
@@ -34,7 +43,7 @@ public class BiomeGenerator : MonoBehaviour
         return data;
     }
 
-    private int GetSurfaceHeight(int x, int z, int chunkHeight)
+    public int GetSurfaceHeight(int x, int z, int chunkHeight)
     {
         float height = DomainWarping.GenerateDomainWarp(x, z, NoiseData);
         height = NoiseGenerator.Redistribute(height, NoiseData);
