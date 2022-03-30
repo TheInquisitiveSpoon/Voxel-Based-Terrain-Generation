@@ -5,10 +5,24 @@ using UnityEngine;
 
 public class BiomeGenerator : MonoBehaviour
 {
+    public World World;
+    public BiomeType BiomeType;
     public NoiseData NoiseData;
     public DomainWarping DomainWarping;
     public LayerHandler InitialLayer;
     public List<LayerHandler> MiscHandlers;
+
+    [Range(0.0f, 1.0f)]
+    public float MinTemperature;
+
+    [Range(0.0f, 1.0f)]
+    public float MaxTemperature;
+
+    [Range(0.0f, 1.0f)]
+    public float MinPrecipitation;
+
+    [Range(0.0f, 1.0f)]
+    public float MaxPrecipitation;
 
     public  ChunkData GetChunkData(ChunkData data, int x, int z, int? biomeGroundLevel)
     {

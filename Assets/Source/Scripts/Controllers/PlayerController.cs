@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public Vector3  Velocity;
     public float    MoveSpeed   = 5.0f;
     public float    JumpPower   = 2.0f;
-    public bool     IsFlyEnabled = false;
+    public bool     IsFlyEnabled = true;
 
     //  FUNCTIONS:
     //  Function to update the script during runtime.

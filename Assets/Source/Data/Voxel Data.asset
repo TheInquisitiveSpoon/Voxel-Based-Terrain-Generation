@@ -75,3 +75,21 @@ MonoBehaviour:
     SideTexture: {x: 4, y: 1}
     IsSolid: 1
     GeneratesCollider: 1
+  - VoxelType: 11
+    TopTexture: {x: 0, y: 3}
+    BottomTexture: {x: 0, y: 3}
+    SideTexture: {x: 0, y: 3}
+    IsSolid: 1
+    GeneratesCollider: 1
+  - VoxelType: 12
+    TopTexture: {x: 7, y: 0}
+    BottomTexture: {x: 7, y: 0}
+    SideTexture: {x: 7, y: 0}
+    IsSolid: 1
+    GeneratesCollider: 1
+  - VoxelType: 13
+    TopTexture: {x: 8, y: 9}
+    BottomTexture: {x: 8, y: 7}
+    SideTexture: {x: 8, y: 8}
+    IsSolid: 1
+    GeneratesCollider: 1

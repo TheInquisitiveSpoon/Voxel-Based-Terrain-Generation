@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c656d9e89944342bbda066401e104b, type: 3}
   m_Name: Domain Warping Z Data
   m_EditorClassIdentifier: 
-  Octaves: 3
-  Magnitude: 0.008
-  Seed: 397
-  Offset: {x: 40529, y: 391}
-  Persistence: 0.45
-  Modifier: 1.25
+  Octaves: 4
+  Magnitude: 0.01
+  Seed: 1203
+  Offset: {x: 490, y: 11}
+  Persistence: 0.3
+  Modifier: 0.9
   PlateauExponent: 5

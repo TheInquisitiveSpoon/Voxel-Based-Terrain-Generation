@@ -11,12 +11,12 @@ using UnityEngine.UI;
 public class World : MonoBehaviour
 {
     //  VARIABLES:
+    public GameObject Player;
     public GameController       GameController;
-    public GameObject           Player;
     public TerrainGenerator     TerrainGenerator;
+    public Slider SeedSlider;
+    public GameObject ChunkObject;
     public List<NoiseData>      AllNoiseData;
-    public Slider               SeedSlider;
-    public GameObject           ChunkObject;
     public WorldData            WorldData;
 
     [Range(0, 100000)]
@@ -40,6 +40,15 @@ public class World : MonoBehaviour
         WorldData.ChunkDataToRemove = new List<Vector3Int>();
         WorldData.ChunksToRemove = new List<Vector3Int>();
         SeedSlider.value = Seed;
+        GenerateWorld();
+    }
+
+    public void Regenerate()
+    {
+        RemoveAllChunkData();
+        RemoveAllChunks();
+        WorldData.ChunkDataToCreate.Clear();
+        WorldData.ChunksToCreate.Clear();
         GenerateWorld();
     }
 
@@ -237,6 +246,22 @@ public class World : MonoBehaviour
         return chunksToRemove;
     }
 
+    public void RemoveAllChunkData()
+    {
+        foreach (Vector3Int chunk in ChunkDataList.Keys)
+        {
+            WorldData.ChunkDataToRemove.Add(chunk);
+        }
+    }
+
+    public void RemoveAllChunks()
+    {
+        foreach (Vector3Int chunk in Chunks.Keys)
+        {
+            WorldData.ChunksToRemove.Add(chunk);
+        }
+    }
+
     public void ChangeWorldSeed()
     {
         foreach (NoiseData noiseData in AllNoiseData)
@@ -269,24 +294,4 @@ public class World : MonoBehaviour
         Vector3Int chunkPos = ChunkFunctions.GetVoxelChunkPos(tempChunk, new Vector3Int(x, y, z));
         return ChunkFunctions.GetVoxelTypeFromPos(tempChunk, chunkPos.x, chunkPos.y, chunkPos.z);
     }
-
-    //  Only enabled if using unity editor.
-#if UNITY_EDITOR
-    //  Draws outlines of selected chunks in the scene window if gizmos are enabled.
-    private void OnDrawGizmos()
-    {
-        //  Ensure application is running and that there is chunk data before eneabling selection.
-        if (Application.isPlaying && Player != null)
-        {
-            Gizmos.color = Color.green;
-            Vector3 cubeCenter = GameController.PlayerChunkCenter;
-            float cubeSize = 2.0f * ((ChunkWidth) * (ChunkRenderDist)) + ChunkWidth;
-            Gizmos.DrawWireCube(cubeCenter, new Vector3(cubeSize, 1.0f, cubeSize));
-
-            Gizmos.color = Color.blue;
-            cubeSize += ChunkWidth * 2.0f;
-            Gizmos.DrawWireCube(cubeCenter, new Vector3(cubeSize, 1.0f, cubeSize));
-        }
-    }
-#endif
 }

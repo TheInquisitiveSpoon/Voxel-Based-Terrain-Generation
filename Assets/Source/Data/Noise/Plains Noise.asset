@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Plains Noise
   m_EditorClassIdentifier: 
   Octaves: 8
-  Magnitude: 0.007
+  Magnitude: 0.009
   Seed: 1203
-  Offset: {x: 10000, y: 4206}
-  Persistence: 0.45
-  Modifier: 1.25
-  PlateauExponent: 5
+  Offset: {x: 158, y: 2065}
+  Persistence: 0.4
+  Modifier: 1.2
+  PlateauExponent: 3

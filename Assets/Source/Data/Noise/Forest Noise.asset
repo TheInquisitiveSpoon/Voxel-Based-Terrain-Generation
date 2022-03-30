@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9c656d9e89944342bbda066401e104b, type: 3}
-  m_Name: Desert Noise
+  m_Name: Forest Noise
   m_EditorClassIdentifier: 
-  Octaves: 4
-  Magnitude: 0.005
-  Seed: 0
-  Offset: {x: 594, y: 574}
-  Persistence: 0.2
-  Modifier: 1
+  Octaves: 8
+  Magnitude: 0.008
+  Seed: 1203
+  Offset: {x: 4599, y: 243}
+  Persistence: 0.4
+  Modifier: 1.15
   PlateauExponent: 3

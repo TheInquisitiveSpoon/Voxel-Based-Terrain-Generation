@@ -3,17 +3,18 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TerrainGenerator : MonoBehaviour
 {
-    public BiomeGenerator BiomeGenerator;
-
     [SerializeField]
     public List<Vector3Int> BiomeCenters = new List<Vector3Int>();
-    public List<float> BiomeNoise = new List<float>();
+    public List<float> TemperatureNoise = new List<float>();
+    public List<float> PrecipitationNoise = new List<float>();
 
     [SerializeField]
-    public NoiseData BiomeNoiseData;
+    public NoiseData TemperatureNoiseData;
+    public NoiseData PrecipitationNoiseData;
     public DomainWarping DomainWarping;
 
     [SerializeField]
@@ -22,15 +23,13 @@ public class TerrainGenerator : MonoBehaviour
 
     public ChunkData GenerateChunk(ChunkData data)
     {
-        BiomeSelector biomeSelector = GetBiomeGenerator(data.WorldPos, data, false);
-
         data.TreeData = new TreeData();
 
         for (int x = 0; x < data.Width; x++)
         {
             for (int z = 0; z < data.Width; z++)
             {
-                biomeSelector = GetBiomeGenerator(new Vector3Int(data.WorldPos.x + x, 0, data.WorldPos.z + z), data, true);
+                BiomeSelector biomeSelector = GetBiomeGenerator(new Vector3Int(data.WorldPos.x + x, 0, data.WorldPos.z + z), data);
                 data = biomeSelector.BiomeGenerator.GetChunkData(data, x, z, biomeSelector.GroundLevel);
             }
         }
@@ -38,14 +37,11 @@ public class TerrainGenerator : MonoBehaviour
         return data;
     }
 
-    private BiomeSelector GetBiomeGenerator(Vector3Int worldPos, ChunkData data, bool warpTerrain)
+    private BiomeSelector GetBiomeGenerator(Vector3Int worldPos, ChunkData data)
     {
-        if (warpTerrain)
-        {
-            Vector2Int domainWarp = Vector2Int.RoundToInt(DomainWarping.GetIntOffset(worldPos.x, worldPos.z));
-            worldPos.x += domainWarp.x;
-            worldPos.z += domainWarp.y;
-        }
+        Vector2Int domainWarp = Vector2Int.RoundToInt(DomainWarping.GetIntOffset(worldPos.x, worldPos.z));
+        worldPos.x += domainWarp.x;
+        worldPos.z += domainWarp.y;
 
         List<BiomeHelper> biomes = GetBiomes(worldPos);
 
@@ -66,11 +62,13 @@ public class TerrainGenerator : MonoBehaviour
 
     private BiomeGenerator SelectBiome(int index)
     {
-        float temperature = BiomeNoise[index];
+        float temperature = TemperatureNoise[index];
+        float precipitation = PrecipitationNoise[index];
         
         foreach (var BiomeData in BiomeGenerators)
         {
-            if (temperature >= BiomeData.MinTemperature && temperature < BiomeData.MaxTemperature)
+            if (temperature >= BiomeData.BiomeGenerator.MinTemperature && temperature < BiomeData.BiomeGenerator.MaxTemperature
+                && precipitation >= BiomeData.BiomeGenerator.MinPrecipitation && precipitation < BiomeData.BiomeGenerator.MaxPrecipitation)
             {
                 return BiomeData.BiomeGenerator;
             }
@@ -116,19 +114,27 @@ public class TerrainGenerator : MonoBehaviour
             BiomeCenters[i] = new Vector3Int(BiomeCenters[i].x + domainWarp.x, 0, BiomeCenters[i].z + domainWarp.y);
         }
 
-        BiomeNoise = CalculateBiomeNoise(BiomeCenters);
+        TemperatureNoise = CalculateTemperature(BiomeCenters);
+        PrecipitationNoise = CalculatePrecipitation(BiomeCenters);
     }
 
-    private List<float> CalculateBiomeNoise(List<Vector3Int> biomeCenters)
+    private List<float> CalculateTemperature(List<Vector3Int> biomeCenters)
     {
         return biomeCenters
-            .Select(center => NoiseGenerator.PerlinOctave(center.x, center.z, BiomeNoiseData))
+            .Select(center => NoiseGenerator.PerlinOctave(center.x, center.z, TemperatureNoiseData))
+            .ToList();
+    }
+
+    private List<float> CalculatePrecipitation(List<Vector3Int> biomeCenters)
+    {
+        return biomeCenters
+            .Select(center => NoiseGenerator.PerlinOctave(center.x, center.z, PrecipitationNoiseData))
             .ToList();
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.blue;
 
         foreach(Vector3Int biomeCenter in BiomeCenters)
         {
@@ -141,12 +147,6 @@ public class TerrainGenerator : MonoBehaviour
 public struct BiomeData
 {
     public BiomeGenerator BiomeGenerator;
-
-    [Range(0.0f, 1.0f)]
-    public float MinTemperature;
-
-    [Range(0.0f, 1.0f)]
-    public float MaxTemperature;
 }
 
 public class BiomeSelector

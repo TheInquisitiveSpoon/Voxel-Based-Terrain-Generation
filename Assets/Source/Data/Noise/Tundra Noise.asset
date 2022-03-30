@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9c656d9e89944342bbda066401e104b, type: 3}
-  m_Name: Plains Tree Data
+  m_Name: Tundra Noise
   m_EditorClassIdentifier: 
   Octaves: 3
-  Magnitude: 0.2
+  Magnitude: 0.004
   Seed: 1203
-  Offset: {x: 6859, y: 555}
-  Persistence: 0.01
-  Modifier: 1.5
-  PlateauExponent: 0
+  Offset: {x: 582, y: 49}
+  Persistence: 0.5
+  Modifier: 1.1
+  PlateauExponent: 6

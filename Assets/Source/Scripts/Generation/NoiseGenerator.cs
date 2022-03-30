@@ -19,7 +19,7 @@ public static class NoiseGenerator
 
         for (int i = 0; i < data.Octaves; i++)
         {
-            finalVal += Mathf.PerlinNoise(((data.Seed) + data.Offset.x + x) * frequency, ((data.Seed) + data.Offset.y + z) * frequency) * amplitude;
+            finalVal += Mathf.PerlinNoise(((data.Seed / 2) + data.Offset.x + x) * frequency, ((data.Seed / 2) + data.Offset.y + z) * frequency) * amplitude;
 
             amplitudeCount += amplitude;
 

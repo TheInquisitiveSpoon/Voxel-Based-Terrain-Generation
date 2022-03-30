@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Temperature Noise
   m_EditorClassIdentifier: 
   Octaves: 1
-  Magnitude: 0.05
-  Seed: 553
-  Offset: {x: 3847, y: 475}
-  Persistence: 0.45
+  Magnitude: 0.005
+  Seed: 1203
+  Offset: {x: 42, y: 175}
+  Persistence: 0.5
   Modifier: 1.25
-  PlateauExponent: 2
+  PlateauExponent: 3

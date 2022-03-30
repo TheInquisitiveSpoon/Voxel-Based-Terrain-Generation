@@ -4,18 +4,13 @@ using UnityEngine;
 
 public class WaterHandler : LayerHandler
 {
-    public World World;
+    public VoxelType WaterVoxel;
 
     protected override bool AttemptHandle(ChunkData data, Vector3Int pos, int groundLevel)
     {
-        if (pos.y > groundLevel && pos.y < groundLevel + 2 && pos.y <= World.WaterLevel)
+        if (pos.y > groundLevel && pos.y <= data.World.WaterLevel)
         {
-            ChunkFunctions.SetVoxelType(data, pos, VoxelType.Sand);
-            return true;
-        }
-        if (pos.y > groundLevel && pos.y <= World.WaterLevel)
-        {
-            ChunkFunctions.SetVoxelType(data, pos, VoxelType.Water);
+            ChunkFunctions.SetVoxelType(data, pos, WaterVoxel);
             return true;
         }
 

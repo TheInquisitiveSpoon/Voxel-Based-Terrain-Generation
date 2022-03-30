@@ -7,15 +7,22 @@ public class GameController : MonoBehaviour
 {
     public GameObject Player;
     public World World;
+    public Vector3Int PlayerChunkCenter;
+    public bool UseDomainWarping = true;
 
-    public Vector3Int PlayerChunkPos;
-    public Vector3Int PlayerChunkCenter = Vector3Int.zero;
-    public float DelayTimer = 1.0f;
+    private Vector3Int PlayerChunkPos;
+    private float DelayTimer = 1.0f;
 
     // Update is called once per frame
     private void Awake()
     {
         CheckIfPlayerChunkChanged();
+        PlayerChunkCenter = Vector3Int.zero;
+    }
+
+    public void ToggleDomainWarping()
+    {
+        UseDomainWarping = UseDomainWarping ? false : true;
     }
 
     public void CheckIfPlayerChunkChanged()

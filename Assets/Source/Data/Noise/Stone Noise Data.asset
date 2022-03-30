@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Stone Noise Data
   m_EditorClassIdentifier: 
   Octaves: 1
-  Magnitude: 0.007
-  Seed: 553
-  Offset: {x: 305, y: 4030}
-  Persistence: 0.45
+  Magnitude: 0.008
+  Seed: 1203
+  Offset: {x: 1259, y: 386}
+  Persistence: 0.5
   Modifier: 1.25
   PlateauExponent: 5
