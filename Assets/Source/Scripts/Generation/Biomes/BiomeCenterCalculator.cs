@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //  CLASS:
-public static class BiomeCentering
+public static class BiomeCenterCalculator
 {
     //  Direction vectors for neighbouring biomes.
     private static List<Vector2Int> NeighbourBiomes = new List<Vector2Int>

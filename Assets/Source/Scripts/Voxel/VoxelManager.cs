@@ -7,9 +7,11 @@ using UnityEngine;
 //  CLASS:
 public class VoxelManager : MonoBehaviour
 {
+    //  REFERENCES:
+    public VoxelData                                    TextureData;
+
     //  VARIABLES:
     public static Dictionary<VoxelType, TextureData>    VoxelTextures   = new Dictionary<VoxelType, TextureData>();
-    public VoxelData                                    TextureData;
 
     public static float                                 TextureBuffer   = 0.001f;
     public static float                                 TileWidth;
