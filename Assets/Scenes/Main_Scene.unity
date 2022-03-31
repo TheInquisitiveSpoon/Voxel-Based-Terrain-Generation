@@ -2142,8 +2142,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Controls:\n\tF1 - Fly\n\tF5 - Change camera\n\tEscape - Toggle mouse\n\tLShift
-    - Run\n\tLAlt - Lower altitude\n\tSpace - Jump/Increase altitude"
+  m_Text: "Controls:\n\tF1 - Fly\n\tF4 - Quit program\n\tF5 - Change camera\n\tEscape
+    - Toggle mouse\n\tLShift - Run\n\tLAlt - Lower altitude\n\tSpace - Jump/Increase
+    altitude"
 --- !u!222 &930803906
 CanvasRenderer:
   m_ObjectHideFlags: 0

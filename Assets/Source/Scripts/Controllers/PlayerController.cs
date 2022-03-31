@@ -22,6 +22,12 @@ public class PlayerController : MonoBehaviour
     //  Function to update the script during runtime.
     void Update()
     {
+        //  Terminates program.
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            Application.Quit();
+        }
+
         //  Enables gravity if flying is disabled.
         if (!IsFlyEnabled)
         {
