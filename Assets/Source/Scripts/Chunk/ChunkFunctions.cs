@@ -1,4 +1,6 @@
-﻿//  ChunkFunctions.cs - Functions for manipulating chunk data.
+﻿//  ChunkFunctions.cs - Functions for manipulating chunk data, usuable in multiple classes by being a static class.
+//  Some functions used from the following source:
+//  Accessible at:  https://web.archive.org/web/20150214125646/http://alexstv.com/index.php/posts/unity-voxel-block-tutorial-pt-3
 
 using System;
 using UnityEngine;
@@ -10,15 +12,18 @@ public static class ChunkFunctions
     //  Gets the mesh data of all the voxels within the chunk, based on the voxel type.
     public static MeshHandler GetMeshData(ChunkData chunkData)
     {
-        //  Creates a new mesh handler for the primary mesh and water mesh.
+        //  Creates new mesh handler to manage primary mesh vertex, UV, triangles and collider information for the mesh.
         MeshHandler    meshData             = new MeshHandler();
-        meshData.WaterMesh                  = new MeshHandler();
-        meshData.WaterMesh.IsPrimaryMesh    = false;
 
-        //  Loops through chunk retrieving data for each voxel.
+        //  Creates mesh handler for the water submesh.
+        meshData.WaterMesh                  = new MeshHandler();
+
+        //  Loops through chunk retrieving mesh data for each voxel.
         for (int i = 0; i < chunkData.Voxels.Length; i++)
         {
-            Vector3Int  pos     = GetPosFromIndex(chunkData, i);
+            //  Gets voxel vector from 1D array using chunk pos and index. 
+            Vector3Int pos     = GetPosFromIndex(chunkData, i);
+
             meshData            = VoxelFunctions.GetMeshData(chunkData, pos.x, pos.y, pos.z, meshData, chunkData.Voxels[i]);
         }
 
@@ -30,9 +35,9 @@ public static class ChunkFunctions
     {
         return  new Vector3Int
         {
-            x = Mathf.FloorToInt(x / (float)world.ChunkWidth)    * world.ChunkWidth,
+            x = Mathf.FloorToInt(x / (float)world.ChunkWidth)   * world.ChunkWidth,
             y = Mathf.FloorToInt(y / (float)world.ChunkHeight)  * world.ChunkHeight,
-            z = Mathf.FloorToInt(z / (float)world.ChunkWidth)    * world.ChunkWidth
+            z = Mathf.FloorToInt(z / (float)world.ChunkWidth)   * world.ChunkWidth
         };
     }
     
@@ -45,9 +50,11 @@ public static class ChunkFunctions
         return  true;
     }
 
-    //  Changes the voxel type of a specific voxel in the chunk.
+    //  Changes the voxel type of a specific voxel in the chunk, if voxel is not in the chunk, calls the world method
+    //  which is used for tree leaves, which may cross chunk borders from their parent tree.
     public static void SetVoxelType(ChunkData chunkData, Vector3Int pos, VoxelType newVoxelType)
     {
+        //  Check if voxel position is present in current chunk.
         if (IsVoxelInChunk(chunkData, pos.x, pos.y, pos.z))
         {
             int index = GetIndexFromPos(chunkData, pos.x, pos.y, pos.z);
@@ -59,13 +66,13 @@ public static class ChunkFunctions
         }
     }
 
-    //  Gets the index in the chunk of the specified voxel coordinates.
+    //  Gets the 1D index in the chunk of the specified voxel using the vector coordinates.
     private static int GetIndexFromPos(ChunkData chunkData, int x, int y, int z)
     {
         return x + chunkData.Width * y + chunkData.Width * chunkData.Height * z;
     }
 
-    //  Gets the voxel type of a specific voxel using it's coordinates.
+    //  Gets the voxel type of a specific voxel using vector coordinates.
     public static VoxelType GetVoxelTypeFromPos(ChunkData chunkData, int x, int y, int z)
     {
         //  Returns voxel type if inside current chunk.
@@ -75,18 +82,18 @@ public static class ChunkFunctions
             return chunkData.Voxels[index];
         }
 
-        //  Returns voxel type if outside of currrent chunk.
+        //  Returns voxel type if outside of currrent chunk using world method.
         return chunkData.World.GetVoxelTypeFromChunkPos(chunkData, chunkData.WorldPos.x + x, chunkData.WorldPos.y + y, chunkData.WorldPos.z + z);
     }
 
-    //  Retrieves the voxel position from the chunk index.
+    //  Retrieves the voxel vector position from the chunk index.
     private static Vector3Int GetPosFromIndex(ChunkData chunkData, int index)
     {
         return new Vector3Int
         {
-            x = index % chunkData.Width,
-            y = (index / chunkData.Width) % chunkData.Height,
-            z = index / (chunkData.Width * chunkData.Height)
+            x = index   % chunkData.Width,
+            y = (index  / chunkData.Width)  % chunkData.Height,
+            z = index   / (chunkData.Width  * chunkData.Height)
         };
     }
 

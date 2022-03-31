@@ -248,7 +248,8 @@ public class World : MonoBehaviour
 
     public void RemoveAllChunkData()
     {
-        foreach (Vector3Int chunk in ChunkDataList.Keys)
+        foreach (Vector3Int chunk in ChunkDataList.Keys
+            .Where(chunk => WorldData.ChunkDataToRemove.Contains(chunk) == false))
         {
             WorldData.ChunkDataToRemove.Add(chunk);
         }
@@ -256,7 +257,8 @@ public class World : MonoBehaviour
 
     public void RemoveAllChunks()
     {
-        foreach (Vector3Int chunk in Chunks.Keys)
+        foreach (Vector3Int chunk in Chunks.Keys
+            .Where(chunk => WorldData.ChunksToRemove.Contains(chunk) == false))
         {
             WorldData.ChunksToRemove.Add(chunk);
         }

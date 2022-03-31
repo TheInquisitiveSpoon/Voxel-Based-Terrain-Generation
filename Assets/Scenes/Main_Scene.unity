@@ -2611,7 +2611,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8485abccc9a02c148aad068ebf03558a, type: 2}
   - {fileID: 11400000, guid: a1d4fe3ecbb6c9b47b09a52624812793, type: 2}
   Seed: 0
-  ChunkRenderDist: 8
+  ChunkRenderDist: 16
   ChunkWidth: 16
   ChunkHeight: 100
   WaterLevel: 10
@@ -2710,7 +2710,6 @@ MonoBehaviour:
   Player: {fileID: 893187025}
   World: {fileID: 1516733790}
   PlayerChunkCenter: {x: 0, y: 0, z: 0}
-  UseDomainWarping: 1
 --- !u!4 &1644637613
 Transform:
   m_ObjectHideFlags: 0

@@ -7,16 +7,19 @@ using UnityEngine;
 //  CLASS:
 public class CameraController : MonoBehaviour
 {
-    //  VARIABLES:
+    //  REFERENCES:
     public GameObject   Player;
 
-    public float        CurrentXRotation    = 0.0f;
-    public float        CurrentYRotation    = 0.0f;
-    public float        SensitivityX        = 200.0f;
-    public float        SensitivityY        = 200.0f;
+    //  VARIABLES:
+    private float       CurrentXRotation    = 0.0f;
+    private float       CurrentYRotation    = 0.0f;
+    private float       MinRotationClamp    = -80.0f;
+    private float       MaxRotationClamp    = 80.0f;
+    public float        SensitivityX = 200.0f;
+    public float        SensitivityY = 200.0f;
 
-    bool                IsFirstPerson       = true;
-    bool                IsInvertedY         = false;
+    private bool        IsFirstPerson       = true;
+    private bool        IsInvertedY         = false;
     public bool         IsCursorHidden      = false;
 
     //  FUNCTIONS:
@@ -35,6 +38,7 @@ public class CameraController : MonoBehaviour
             ShowHideCursor();
         }
 
+        //  Enables camera rotation when the cursor is not locked.
         if (!IsCursorHidden)
         {
             //  Gets Movement input for X axis.
@@ -43,12 +47,17 @@ public class CameraController : MonoBehaviour
             //  Handles camera Y movement in first person, using clamping to keep in range of view.
             if (IsFirstPerson)
             {
+                //  Gets Rotation input from mouse Y;
                 float mouseY = Input.GetAxis("Mouse Y") * SensitivityY * Time.deltaTime;
 
-                if (!IsInvertedY) { CurrentYRotation -= mouseY; }
-                else { CurrentYRotation += mouseY; }
+                //  Moves camera for inverted and non-inverted camera.
+                if (!IsInvertedY)   { CurrentYRotation -= mouseY; }
+                else                { CurrentYRotation += mouseY; }
 
-                CurrentYRotation = Mathf.Clamp(CurrentYRotation, -80.0f, 80.0f);
+                //  Clamps camera rotation within acceptable range.
+                CurrentYRotation = Mathf.Clamp(CurrentYRotation, MinRotationClamp, MaxRotationClamp);
+
+                //  Rotates camera by new rotation.
                 transform.localRotation = Quaternion.Euler(CurrentYRotation, 0.0f, 0.0f);
             }
 
@@ -59,26 +68,26 @@ public class CameraController : MonoBehaviour
     }
 
     //  Function to enable swapping between first and third person.
-    public void SwapCameraMode()
+    internal void SwapCameraMode()
     {
         if (IsFirstPerson)
         {
             //  Places camera in position for first person.
             transform.localPosition = new Vector3(0.0f, 1.0f, -2.5f);
             transform.localRotation = Quaternion.AngleAxis(25.0f, Vector3.right);
-            IsFirstPerson = false;
+            IsFirstPerson           = false;
         }
         else
         {
             //  Places camera in position for third person.
             transform.localPosition = new Vector3(0.0f, 0.4f, 0.1f);
-            transform.rotation = Player.transform.rotation;
-            IsFirstPerson = true;
+            transform.rotation      = Player.transform.rotation;
+            IsFirstPerson           = true;
         }
     }
 
     //  Function to hide or show mouse cursor.
-    public void ShowHideCursor()
+    internal void ShowHideCursor()
     {
         if (IsCursorHidden)
         {

@@ -7,15 +7,16 @@ using UnityEngine;
 //  CLASS:
 public class ChunkData
 {
-    //  VARIABLES:
+    //  REFERENCES:
     public World        World;
+
+    //  VARIABLES:
     public Vector3Int   WorldPos;
     public VoxelType[]  Voxels;
     public TreeData     TreeData;
 
     public int          Width       = 16;
     public int          Height      = 100;
-    public bool         IsModified  = false;
 
     //  CONSTRUCTOR:
     public ChunkData(World world, Vector3Int worldPos, int width, int height)
@@ -24,6 +25,8 @@ public class ChunkData
         WorldPos    = worldPos;
         Width       = width;
         Height      = height;
-        Voxels      = new VoxelType[width * height * width];
+
+        //  Initialises new Voxel array using the set chunk width and size.
+        Voxels = new VoxelType[width * height * width];
     }
 }

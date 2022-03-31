@@ -14,7 +14,6 @@ public class MeshHandler
     public List<int>        ColliderTriangles   = new List<int>();
 
     public MeshHandler      WaterMesh;
-    public bool             IsPrimaryMesh          = true;
 
     //  FUNCTIONS:
     //  Function to add vertex to list and add to collider list if it generates collision.
